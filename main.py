@@ -15,7 +15,7 @@ CFG = json.load(open(os.path.join(HERE, "config.json"), encoding="utf-8"))
 NICHE = {  # CR category id -> RU label (unknown ids fall back to CR's English name)
  "artificial-intelligence": "AI", "ai-tools": "AI-сервисы", "ai-video": "AI-видео", "technology": "Технологии",
  "software": "Софт", "saas": "SaaS", "developer-tools": "Инструменты для разработчиков", "productivity-tools": "Продуктивность",
- "productivity": "Продуктивность", "gadgets": "Гаджеты", "app": "Приложения", "mobile-app": "Мобильные приложения",
+ "productivity": "Продуктивность", "gadgets": "Гаджеты", "app": "Приложения", "mobile-app": "Приложения",
  "ios-app": "iOS-приложения", "roblox": "Roblox", "minecraft": "Minecraft", "fortnite": "Fortnite", "gta": "GTA",
  "gaming": "Игры", "pc-gaming": "PC-игры", "mobile-gaming": "Мобильные игры", "streamer": "Стримеры", "twitch": "Twitch",
  "kick": "Kick", "youtuber": "Ютуберы", "influencer": "Инфлюенсеры", "content-creator": "Контент-мейкеры",
@@ -41,9 +41,16 @@ NICHE = {  # CR category id -> RU label (unknown ids fall back to CR's English n
  "art-design": "Арт и дизайн", "events": "Ивенты", "politics": "Политика", "news-politics": "Новости и политика",
  "christian": "Христианство", "faith-spirituality": "Вера", "food": "Еда",
 }
-ADULT = r"\b(casino|gambl\w*|slots?|roulette|betting|sportsbook|stake\.com|roobet|shuffle\.com|poker|blackjack)\b"
+ADULT = r"\b(casinos?|gambl\w*|slots?|roulette|bett?ing|sportsbooks?|sweepstakes?|stake(\.com|\.us)?|roobet|shuffle\.com|metawin|rollbit|bc\.game|gamdom|duelbits|rainbet|winna|poker|blackjack|bookmaker|igaming)\b"
 CTYPE = {"clipping": "Клиппинг", "youtube-long-form": "Длинные видео YouTube", "ugc-with-face": "UGC с лицом", "ugc-faceless": "UGC без лица",
-         "editing": "Монтаж", "slideshow": "Слайдшоу", "meme": "Мемы", "repost": "Репосты"}
+         "editing": "Монтаж", "slideshow": "Слайдшоу", "slideshows": "Слайдшоу", "meme": "Мемы", "repost": "Репосты",
+         "reposting": "Репосты", "sound": "Под звук/трек", "logo": "С логотипом бренда"}
+ORDER = ["x", "tiktok", "instagram", "youtube", "facebook", "snapchat", "threads"]
+def brief(o, det):
+    """all text a brand wrote: name, org, description, guidelines"""
+    g = ((det.get("configuration") or {}).get("content") or {}).get("guidelines") or ""
+    org = (det.get("organization") or {}).get("name") or o.get("organizationName") or ""
+    return f"{o.get('name') or ''} {org} {o.get('description') or ''} {g if isinstance(g, str) else json.dumps(g)}"
 PLAT = {"x": "X", "tiktok": "TikTok", "instagram": "Instagram", "youtube": "YouTube Shorts", "facebook": "Facebook",
         "snapchat": "Snapchat", "threads": "Threads"}
 PLAT_FALLBACK = {"x": "𝕏", "tiktok": "🎵", "instagram": "📸", "youtube": "▶️", "facebook": "📘", "snapchat": "👻", "threads": "🧵"}
@@ -80,15 +87,17 @@ FOOT_GIVE = r"(source footage|our footage|(footage|videos?|clips?|episodes?|asse
 FOOT_PUBLIC = r"(\bvods?\b|(twitch|kick|youtube|live) ?streams?|\bstreams?\b|livestreams?|(long[- ]form|youtube|full) (videos?|episodes?|content)|podcasts?|interviews?|(his|her|their) (content|videos?|channel|socials?|social media|accounts?|streams?)|social media accounts?|music videos?|\bmv\b|showcase|movie|film|trailer|episodes?|series)"
 FOOT_OWN = r"(\bugc\b|film yourself|your own (content|video|face)|create your own|talking[- ]head|on camera|faceless|slideshows?|\btrend\b|\bmemes?\b|use the (campaign |official )?(sound|song|audio)|add the (sound|song)|with the (sound|song)|campaign sound|\bsong:|lip ?sync|dance)"
 def footage(o, det):
-    d = ((o.get("name") or "") + " " + (o.get("description") or "")).lower()
+    d = brief(o, det).lower()
     types = {t["id"] for t in ((det.get("configuration") or {}).get("content") or {}).get("contentTypes", [])}
     cats = {c["id"] for c in o.get("categories") or []}
     if re.search(FOOT_GIVE, d):
         return "brand_provides"
     if re.search(FOOT_PUBLIC, d) and ("clipping" in types or re.search(r"\bclip", d)):
         return "public_source"
-    if "sound-campaign" in cats or re.search(FOOT_OWN, d) or (types and types <= {"ugc-with-face", "ugc-faceless"}):
+    if "sound-campaign" in cats or re.search(FOOT_OWN, d) or (types and types <= {"ugc-with-face", "ugc-faceless", "slideshows", "sound"}):
         return "own_content"
+    if types == {"clipping"} or (not types and re.search(r"\bclip(s|ping|per)?\b", d)):
+        return "public_source"  # clipping = cutting the creator's own public content
     return "unclear"
 
 
@@ -108,14 +117,17 @@ footage: one of
   own_content = creator films or makes original content (UGC, talking head, skits, trends, slideshows, sound/song campaigns, screen recordings);
   unclear = the text does not say.
 footage_note: up to 8 Russian words with the key detail (e.g. "50+ сырых видео в папке", "клипы со стримов Twitch", "снимаешь себя с приложением"); empty if unclear.
+format: if "Content types" is "-", 1-3 Russian words for what to make (e.g. "Клиппинг", "UGC с лицом", "Слайдшоу", "Репосты"); otherwise empty.
+"Clipping" campaigns about a streamer/podcaster/creator with no files mentioned are public_source.
 Campaign name: {name}
+Advertiser: {org}
 Brand categories: {cats}
 Content types: {types}
-Description: {desc}"""
+Description and guidelines: {desc}"""
 AI_SCHEMA = {"type": "OBJECT", "properties": {
     "niches": {"type": "ARRAY", "items": {"type": "STRING"}},
     "footage": {"type": "STRING", "enum": list(FOOT_LABEL)},
-    "footage_note": {"type": "STRING"}}, "required": ["niches", "footage", "footage_note"]}
+    "footage_note": {"type": "STRING"}, "format": {"type": "STRING"}}, "required": ["niches", "footage", "footage_note"]}
 _ai_off = False
 _ai_model = None
 def ai_model(key, force=False):
@@ -140,8 +152,10 @@ def ai_classify(o, det):
     key = os.environ.get("GEMINI_API_KEY")
     if not key or _ai_off: return None
     types = [t["name"] for t in ((det.get("configuration") or {}).get("content") or {}).get("contentTypes", [])]
-    prompt = AI_PROMPT.format(name=o["name"], cats=", ".join(c["name"] for c in o.get("categories") or []),
-                              types=", ".join(types) or "-", desc=(o.get("description") or "")[:3000])
+    g = ((det.get("configuration") or {}).get("content") or {}).get("guidelines") or ""
+    prompt = AI_PROMPT.format(name=o["name"], org=(det.get("organization") or {}).get("name") or o.get("organizationName") or "-",
+                              cats=", ".join(c["name"] for c in o.get("categories") or []), types=", ".join(types) or "-",
+                              desc=((o.get("description") or "") + "\n" + (g if isinstance(g, str) else json.dumps(g, ensure_ascii=False)))[:4000])
     body = {"contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "responseSchema": AI_SCHEMA}}
     try:
@@ -169,13 +183,14 @@ def caption(o, det):
     ai = ai_classify(o, det)
     cats = list(dict.fromkeys(NICHE.get(c["id"], c["name"]) for c in o.get("categories") or []))
     if ai and ai.get("niches"): cats = list(dict.fromkeys(n.strip() for n in ai["niches"] if n.strip()))[:3]
-    if not any("18+" in c for c in cats) and re.search(ADULT, (o["name"] + " " + (o.get("description") or "")).lower()):
+    if not any("18+" in c for c in cats) and re.search(ADULT, brief(o, det).lower()):
         cats.append("Гемблинг 18+")
     types = [CTYPE.get(t["id"], t["name"]) for t in ((det.get("configuration") or {}).get("content") or {}).get("contentTypes", [])]
     budget = o.get("budgetCents") or 0
     spent = ((o.get("metrics") or {}).get("budgetSpentCents") or 0)
     pct = spent / budget * 100 if budget else 0
-    L = [f"🆕 <b>{name}</b>", ""]
+    if not types and ai and ai.get("format", "").strip(): types = [ai["format"].strip()]
+    L = [f"<b>{name}</b>", ""]
     if cats: L.append(f"🏷 <b>Ниша:</b> {html.escape(' · '.join(cats))}")
     if types: L.append(f"🎬 <b>Формат:</b> {html.escape(', '.join(types))}")
     fk = ai["footage"] if ai else footage(o, det)
@@ -188,14 +203,17 @@ def caption(o, det):
         L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
-        pays = o.get("payouts") or []
-        caps = {p.get("maxPayoutCents") or 0 for p in pays}
-        same = len(caps) == 1  # one cap for all platforms -> its own line, rate lines stay short
+        pays = sorted(o.get("payouts") or [], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
+        def rng(p):  # per-post payout window: min earned before a post pays, max per post
+            lo, hi = p.get("minPayoutCents") or 0, p.get("maxPayoutCents") or 0
+            return (f"от {money(lo)} " if lo else "") + (f"до {money(hi)}" if hi else "")
+        rngs = {rng(p) for p in pays}
+        same = len(rngs) == 1  # one window for all platforms -> its own line, rate lines stay short
         for p in pays:
             s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
-            if p.get("maxPayoutCents") and not same: s += f" (макс {money(p['maxPayoutCents'])})"
+            if not same and rng(p): s += f" ({rng(p)})"
             L.append(s)
-        if same and next(iter(caps)): L.append(f"📌 <b>Макс. за пост:</b> {money(next(iter(caps)))}")
+        if same and next(iter(rngs)): L.append(f"📌 <b>Выплата за пост:</b> {next(iter(rngs))}")
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
@@ -203,8 +221,8 @@ def caption(o, det):
     if org:
         st = ORG.get(o.get("organizationId")) or {}
         bits = ["☑️ с галочкой CR" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "без галочки CR"]
-        if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
-        bits.append(f"уже выплатил клипперам {money(st['paid'])}" if st.get("paid") else ("первая кампания, выплат ещё не было" if st.get("n", 0) <= 1 else "выплат ещё не было"))
+        if st.get("n", 0) > 1: bits.append(f"{st['n']} " + ("активные кампании" if st["n"] % 10 in (2, 3, 4) and st["n"] % 100 not in (12, 13, 14) else "активных кампаний"))
+        bits.append(f"уже выплатил клипперам ${st['paid'] / 100:,.0f}" if st.get("paid", 0) >= 100 else "пока без выплат")
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
     sig = CFG.get("signature") or {}
     tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
@@ -297,6 +315,11 @@ def main():
         return t is None or t > cut  # unknown date -> treat as fresh (never silently drop a new offer)
     stale = {o["id"] for o in camps if o["id"] not in seen and not fresh(o)}
     if stale: print(f"skipped old unseen: {len(stale)}"); seen |= stale
+    def spent(o):
+        b = o.get("budgetCents") or 0
+        return ((o.get("metrics") or {}).get("budgetSpentCents") or 0) / b * 100 if b else 0
+    full = {o["id"] for o in camps if o["id"] not in seen and spent(o) >= float(CFG.get("max_spent_pct", 80))}
+    if full: print(f"skipped >=80% spent: {len(full)}"); seen |= full
     new = [o for o in camps if o["id"] not in seen][::-1][: int(CFG.get("max_per_run", 5))]
     items = [(o, get(f"{API}/{o['id']}").get("data") or {}) for o in new]
     if dry:
