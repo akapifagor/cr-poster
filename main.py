@@ -83,20 +83,20 @@ def footage(o, det):
     types = {t["id"] for t in ((det.get("configuration") or {}).get("content") or {}).get("contentTypes", [])}
     cats = {c["id"] for c in o.get("categories") or []}
     if re.search(FOOT_GIVE, d):
-        return "✅ Да, бренд даёт готовые видео/исходники"
+        return "brand_provides"
     if re.search(FOOT_PUBLIC, d) and ("clipping" in types or re.search(r"\bclip", d)):
-        return "🎬 Нарезка из открытых видео/стримов автора, качаешь сам"
+        return "public_source"
     if "sound-campaign" in cats or re.search(FOOT_OWN, d) or (types and types <= {"ugc-with-face", "ugc-faceless"}):
-        return "🤳 Нет, свой контент (UGC/тренд/звук)"
-    return "❔ Не указано, смотри бриф"
+        return "own_content"
+    return "unclear"
 
 
 # ---------- AI classification (Gemini free tier); regex rules above are the fallback ----------
 FOOT_LABEL = {
-    "brand_provides": "✅ Да, бренд даёт готовые видео/исходники",
-    "public_source": "🎬 Нарезка из открытых видео/стримов автора, качаешь сам",
-    "own_content": "🤳 Нет, свой контент (UGC/тренд/звук)",
-    "unclear": "❔ Не указано, смотри бриф",
+    "brand_provides": "✅|да, бренд даёт готовые видео/исходники",
+    "public_source": "✅|да, нарезка из открытых видео/стримов автора, качаешь сам",
+    "own_content": "❌|нет, свой контент (UGC/тренд/звук)",
+    "unclear": "❔|не указано, смотри бриф",
 }
 AI_PROMPT = """You classify a short-form video clipping/UGC campaign for a Russian Telegram channel.
 Return JSON only.
@@ -177,11 +177,10 @@ def caption(o, det):
     L = [f"🆕 <b>{name}</b>", ""]
     if cats: L.append(f"🏷 <b>Ниша:</b> {html.escape(' · '.join(cats))}")
     if types: L.append(f"🎬 <b>Формат:</b> {html.escape(', '.join(types))}")
-    if ai:
-        foot = FOOT_LABEL[ai["footage"]] + (f" ({html.escape(ai['footage_note'].strip())})" if ai.get("footage_note", "").strip() and ai["footage"] != "unclear" else "")
-    else:
-        foot = footage(o, det)
-    L.append(f"🎞 <b>Готовый футаж:</b> {foot}")
+    fk = ai["footage"] if ai else footage(o, det)
+    icon, foot = FOOT_LABEL[fk].split("|")
+    if ai and ai.get("footage_note", "").strip() and fk != "unclear": foot += f" ({html.escape(ai['footage_note'].strip())})"
+    L.append(f"{icon} <b>Готовый футаж:</b> {foot}")
     L.append("")
     if o.get("payoutType") == "pool":
         L.append(f"🏆 <b>Пул {money(budget)}</b>, делится по просмотрам")
@@ -198,9 +197,9 @@ def caption(o, det):
     org = (det.get("organization") or {}).get("name") or o.get("organizationName")
     if org:
         st = ORG.get(o.get("organizationId")) or {}
-        bits = ["✅ верифицирован" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "не верифицирован"]
+        bits = ["☑️ с галочкой CR" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "без галочки CR"]
         if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
-        if st.get("paid"): bits.append(f"уже выплатил {money(st['paid'])}")
+        bits.append(f"уже потратил на клипперов {money(st['paid'])}" if st.get("paid") else "клипперам пока ничего не платил")
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
@@ -257,7 +256,7 @@ def org_stats(camps):
     """Advertiser track record from Content Rewards public data (active campaigns only; CR has no public rating)."""
     for o in camps:
         a = ORG.setdefault(o.get("organizationId"), {"n": 0, "paid": 0})
-        a["n"] += 1; a["paid"] += ((o.get("metrics") or {}).get("paidOutCents") or 0)
+        a["n"] += 1; a["paid"] += ((o.get("metrics") or {}).get("budgetSpentCents") or 0)  # paidOutCents is always 0 publicly
 
 def main():
     if "--ai-test" in sys.argv: return ai_test()
