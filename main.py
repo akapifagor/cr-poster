@@ -167,13 +167,19 @@ def ai_classify(o, det):
             r = requests.post(url, params={"key": key}, json=body, timeout=40)
             if r.status_code == 404 and i == 0: ai_model(key, force=True); continue
             if r.status_code in (500, 502, 503, 504): busy += 1; time.sleep(4); continue
-            if r.status_code == 429: time.sleep(20); continue
+            if r.status_code == 429:
+                t = r.text
+                if "PerDay" in t or "per day" in t.lower():
+                    print("ai: daily free quota used up, rules for the rest of this run"); _ai_off = True; return None
+                m2 = re.search(r'"retryDelay":\s*"(\d+)', t)
+                print("ai 429, wait", m2.group(1) if m2 else 20, "s")
+                time.sleep(min(int(m2.group(1)) + 1 if m2 else 20, 65)); continue
             if r.status_code >= 400: print("ai http", r.status_code, r.text[:300])
             r.raise_for_status()
             res = json.loads(r.json()["candidates"][0]["content"]["parts"][0]["text"])
             if res.get("footage") in FOOT_LABEL: return res
             return None
-        _ai_off = True  # still rate-limited: rules for the rest of this run
+        print("ai: gave up on", o.get("name", "")[:40], "-> rules")  # this offer only
     except Exception as e:
         print("ai fail", o["id"], str(e)[:200])
     return None
@@ -275,7 +281,7 @@ def ai_test():
         rule_ok += rule in d["accept"]
         if ai: n_ai += 1; ai_ok += ai["footage"] in d["accept"]
         print(f"{o['name'][:45]:45} | ждём {'/'.join(d['accept']):28} | AI {(ai or {}).get('footage','-'):15} {'OK ' if ai and ai['footage'] in d['accept'] else 'ERR'} | правила {rule:15} | ниши AI: {', '.join((ai or {}).get('niches', []))} | {(ai or {}).get('footage_note','')}")
-        time.sleep(4)  # stay under free-tier per-minute limit
+        time.sleep(7)  # stay under free-tier per-minute limit
     print(f"\nAI ответил на {n_ai}/{len(data)}, футаж верно: {ai_ok}/{n_ai}; правила: {rule_ok}/{len(data)}")
 
 ORG = {}
