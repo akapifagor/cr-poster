@@ -116,6 +116,24 @@ AI_SCHEMA = {"type": "OBJECT", "properties": {
     "footage": {"type": "STRING", "enum": list(FOOT_LABEL)},
     "footage_note": {"type": "STRING"}}, "required": ["niches", "footage", "footage_note"]}
 _ai_off = False
+_ai_model = None
+def ai_model(key, force=False):
+    """config ai_model; if Google 404s it (model retired), pick the newest *flash-lite*, else *flash* model."""
+    global _ai_model
+    if _ai_model and not force: return _ai_model
+    if not force: _ai_model = CFG.get("ai_model", "gemini-2.5-flash-lite"); return _ai_model
+    try:
+        ms = requests.get("https://generativelanguage.googleapis.com/v1beta/models", params={"key": key, "pageSize": 1000}, timeout=30).json().get("models", [])
+        names = [m["name"].split("/")[-1] for m in ms if "generateContent" in m.get("supportedGenerationMethods", [])]
+        good = [n for n in names if n.startswith("gemini") and not re.search(r"preview|exp|tts|image|live|audio|thinking", n)]
+        def rank(n): return [float(x) for x in re.findall(r"\d+(?:\.\d+)?", n)[:1] or [0]]
+        for pat in ("flash-lite", "flash"):
+            c = sorted([n for n in good if pat in n and not (pat == "flash" and "lite" in n)], key=rank, reverse=True)
+            if c: _ai_model = c[0]; break
+        print("AI model ->", _ai_model, "| available:", ", ".join(names)[:600])
+    except Exception as e:
+        print("model list fail", str(e)[:200])
+    return _ai_model
 def ai_classify(o, det):
     global _ai_off
     key = os.environ.get("GEMINI_API_KEY")
@@ -125,11 +143,13 @@ def ai_classify(o, det):
                               types=", ".join(types) or "-", desc=(o.get("description") or "")[:3000])
     body = {"contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "responseSchema": AI_SCHEMA}}
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{CFG.get('ai_model', 'gemini-2.5-flash-lite')}:generateContent"
     try:
-        for i in range(2):
+        for i in range(3):
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{ai_model(key)}:generateContent"
             r = requests.post(url, params={"key": key}, json=body, timeout=40)
+            if r.status_code == 404 and i == 0: ai_model(key, force=True); continue
             if r.status_code == 429: time.sleep(20); continue
+            if r.status_code >= 400: print("ai http", r.status_code, r.text[:300])
             r.raise_for_status()
             res = json.loads(r.json()["candidates"][0]["content"]["parts"][0]["text"])
             if res.get("footage") in FOOT_LABEL: return res
