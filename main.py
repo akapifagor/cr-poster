@@ -181,7 +181,7 @@ def caption(o, det):
     icon, foot = FOOT_LABEL[fk].split("|")
     if ai and ai.get("footage_note", "").strip() and fk != "unclear": foot += f" ({html.escape(ai['footage_note'].strip())})"
     L.append(f"{icon} <b>Готовый футаж:</b> {foot}")
-    L.append("")
+    L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>', ""]
     if o.get("payoutType") == "pool":
         L.append(f"🏆 <b>Пул {money(budget)}</b>, делится по просмотрам")
         L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
@@ -201,13 +201,12 @@ def caption(o, det):
         if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
         bits.append(f"уже потратил на клипперов {money(st['paid'])}" if st.get("paid") else "клипперам пока ничего не платил")
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
-    L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
     tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
     s = "\n".join(L)
     lim = 1024 - len(tail)  # signature is never cut off; drop optional lines, never cut HTML mid-tag
-    while len(s) > lim and len(L) > 4:
-        L.pop(-3); s = "\n".join(L)
+    while len(s) > lim and len(L) > 8:
+        L.pop(); s = "\n".join(L)
     return s + tail
 
 def link(o):
