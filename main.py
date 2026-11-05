@@ -271,7 +271,7 @@ def ai_test():
     rev = {v: k for k, v in FOOT_LABEL.items()}
     ai_ok = rule_ok = n_ai = 0
     for d in data:
-        o = d["offer"]; ai = ai_classify(o, {}); rule = rev[footage(o, {})]
+        o = d["offer"]; ai = ai_classify(o, {}); rule = footage(o, {})
         rule_ok += rule in d["accept"]
         if ai: n_ai += 1; ai_ok += ai["footage"] in d["accept"]
         print(f"{o['name'][:45]:45} | ждём {'/'.join(d['accept']):28} | AI {(ai or {}).get('footage','-'):15} {'OK ' if ai and ai['footage'] in d['accept'] else 'ERR'} | правила {rule:15} | ниши AI: {', '.join((ai or {}).get('niches', []))} | {(ai or {}).get('footage_note','')}")
