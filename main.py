@@ -218,6 +218,7 @@ def caption(o, det):
             if not same and rng(p): s += f" ({rng(p)})"
             L.append(s)
         if same and next(iter(rngs)): L.append(f"📌 <b>За пост:</b> {next(iter(rngs))}")
+    L.append("")  # budget/advertiser block separated from rates
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
