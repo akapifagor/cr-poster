@@ -187,10 +187,14 @@ def caption(o, det):
         L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
-        for p in o.get("payouts") or []:
+        pays = o.get("payouts") or []
+        caps = {p.get("maxPayoutCents") or 0 for p in pays}
+        same = len(caps) == 1  # one cap for all platforms -> its own line, rate lines stay short
+        for p in pays:
             s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
-            if p.get("maxPayoutCents"): s += f" (до {money(p['maxPayoutCents'])} за пост)"
+            if p.get("maxPayoutCents") and not same: s += f" (макс {money(p['maxPayoutCents'])})"
             L.append(s)
+        if same and next(iter(caps)): L.append(f"📌 <b>Макс. за пост:</b> {money(next(iter(caps)))}")
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
@@ -199,7 +203,7 @@ def caption(o, det):
         st = ORG.get(o.get("organizationId")) or {}
         bits = ["☑️ с галочкой CR" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "без галочки CR"]
         if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
-        bits.append(f"уже потратил на клипперов {money(st['paid'])}" if st.get("paid") else "клипперам пока ничего не платил")
+        bits.append(f"уже выплатил клипперам {money(st['paid'])}" if st.get("paid") else ("первая кампания, выплат ещё не было" if st.get("n", 0) <= 1 else "выплат ещё не было"))
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
     sig = CFG.get("signature") or {}
     tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
