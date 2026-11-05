@@ -263,7 +263,10 @@ def main():
     camps = [o for o in allc if o.get("status") == "active" and not o.get("private")]
     if "--backfill" in sys.argv:  # test: post the N newest offers again, state untouched
         n = int(sys.argv[sys.argv.index("--backfill") + 1])
-        items = [(o, get(f"{API}/{o['id']}").get("data") or {}) for o in camps[:n]][::-1]
+        pool = camps
+        if "--all-platforms" in sys.argv:  # only offers paying on X, TikTok, Instagram and YouTube
+            pool = [o for o in camps if {"x", "tiktok", "instagram", "youtube"} <= set(o.get("platforms") or [])]
+        items = [(o, get(f"{API}/{o['id']}").get("data") or {}) for o in pool[:n]][::-1]
         if dry:
             for o, d in items: print(caption(o, d), "\n" + "-" * 40)
         else: asyncio.run(post(items, set(seen or ())))
