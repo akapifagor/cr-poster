@@ -1,6 +1,7 @@
 """Content Rewards -> Telegram channel poster (userbot, custom emoji).
 Runs once per call (GitHub Actions cron every 30 min). New campaigns = ids not in seen.json.
 """
+from datetime import datetime, timedelta, timezone
 import io, json, os, re, sys, time, asyncio, html
 import requests
 
@@ -261,6 +262,16 @@ def org_stats(camps):
         a = ORG.setdefault(o.get("organizationId"), {"n": 0, "paid": 0})
         a["n"] += 1; a["paid"] += ((o.get("metrics") or {}).get("budgetSpentCents") or 0)  # paidOutCents is always 0 publicly
 
+def parse_ts(v):
+    if not v: return None
+    v = str(v)
+    try: return datetime.fromisoformat(v.replace("Z", "+00:00"))
+    except ValueError: pass
+    m = re.match(r"\w+ (\d{4}-\d\d-\d\d) (\d+:\d\d [AP]M) \w+ \(UTC([+-]\d\d):(\d\d)\)", v)
+    if not m: return None
+    tz = timezone(timedelta(hours=int(m[3]), minutes=int(m[4]) * (1 if m[3][0] == "+" else -1)))
+    return datetime.strptime(f"{m[1]} {m[2]}", "%Y-%m-%d %I:%M %p").replace(tzinfo=tz)
+
 def main():
     if "--ai-test" in sys.argv: return ai_test()
     dry = "--dry" in sys.argv
@@ -279,7 +290,14 @@ def main():
         return
     if seen is None:  # first run: remember everything, post only the newest N for a test
         n = int(CFG.get("first_run_post", 0)); seen = {o["id"] for o in camps[n:]}
-    new = [o for o in camps if o["id"] not in seen][::-1][: int(CFG.get("max_per_run", 15))]
+    # only genuinely fresh offers: anything created >48h ago that we never saw (deeper pages, old offers resurfacing) is skipped silently
+    cut = datetime.now(timezone.utc) - timedelta(hours=int(CFG.get("max_age_hours", 48)))
+    def fresh(o):
+        t = parse_ts(o.get("createdAt") or o.get("launchedAt"))
+        return t is None or t > cut  # unknown date -> treat as fresh (never silently drop a new offer)
+    stale = {o["id"] for o in camps if o["id"] not in seen and not fresh(o)}
+    if stale: print(f"skipped old unseen: {len(stale)}"); seen |= stale
+    new = [o for o in camps if o["id"] not in seen][::-1][: int(CFG.get("max_per_run", 5))]
     items = [(o, get(f"{API}/{o['id']}").get("data") or {}) for o in new]
     if dry:
         for o, d in items: print(caption(o, d), "\n" + "-" * 40)

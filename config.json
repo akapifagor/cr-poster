@@ -9,12 +9,13 @@
     "telegram": "5296432770392791386"
   },
   "first_run_post": 3,
-  "max_per_run": 15,
+  "max_per_run": 5,
   "signature": {
     "prefix": "By",
     "text": "A.k.a Pifagor",
     "url": "https://t.me/+zhbtSMa6qk4wZTJi"
   },
   "ai_model": "gemini-3.5-flash-lite",
-  "ai_fallback_model": "gemini-3.5-flash"
+  "ai_fallback_model": "gemini-3.5-flash",
+  "max_age_hours": 48
 }
