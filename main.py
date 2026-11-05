@@ -195,9 +195,13 @@ def caption(o, det):
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
-    if CFG.get("show_advertiser"):  # off by user request 2026-11-05
-        org = (det.get("organization") or {}).get("name") or o.get("organizationName")
-        if org: L.append(f"🏢 {html.escape(org)}")
+    org = (det.get("organization") or {}).get("name") or o.get("organizationName")
+    if org:
+        st = ORG.get(o.get("organizationId")) or {}
+        bits = ["✅ верифицирован" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "не верифицирован"]
+        if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
+        if st.get("paid"): bits.append(f"уже выплатил {money(st['paid'])}")
+        L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
     tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
