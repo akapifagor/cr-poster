@@ -204,16 +204,20 @@ def caption(o, det):
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
         pays = sorted(o.get("payouts") or [], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
-        def rng(p):  # per-post payout window: min earned before a post pays, max per post
-            lo, hi = p.get("minPayoutCents") or 0, p.get("maxPayoutCents") or 0
-            return (f"от {money(lo)} " if lo else "") + (f"до {money(hi)}" if hi else "")
+        def kviews(n):
+            return f"{n / 1000:g}K" if n >= 1000 else str(int(n))
+        def rng(p):  # max payout per post + views a post needs before it pays (CR "Min payout" / rate)
+            lo, hi, r = p.get("minPayoutCents") or 0, p.get("maxPayoutCents") or 0, p.get("rateCents") or 0
+            bits = [f"до {money(hi)}"] if hi else []
+            if lo and r: bits.append(f"оплата от {kviews(round(lo / r * 1000, -1 if lo / r < 10 else 2))} просмотров")
+            return ", ".join(bits)
         rngs = {rng(p) for p in pays}
-        same = len(rngs) == 1  # one window for all platforms -> its own line, rate lines stay short
+        same = len(rngs) == 1  # one rule for all platforms -> its own line, rate lines stay short
         for p in pays:
             s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
             if not same and rng(p): s += f" ({rng(p)})"
             L.append(s)
-        if same and next(iter(rngs)): L.append(f"📌 <b>Выплата за пост:</b> {next(iter(rngs))}")
+        if same and next(iter(rngs)): L.append(f"📌 <b>За пост:</b> {next(iter(rngs))}")
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
