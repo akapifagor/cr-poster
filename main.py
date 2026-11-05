@@ -232,7 +232,7 @@ def caption(o, det):
     org = (det.get("organization") or {}).get("name") or o.get("organizationName")
     if org:
         st = ORG.get(o.get("organizationId")) or {}
-        bits = ["☑️ с галочкой CR" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "без галочки CR"]
+        bits = ["с галочкой CR" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "без галочки CR"]
         if st.get("n", 0) > 1: bits.append(f"{st['n']} " + ("активные кампании" if st["n"] % 10 in (2, 3, 4) and st["n"] % 100 not in (12, 13, 14) else "активных кампаний"))
         bits.append(f"уже выплатил клипперам ${st['paid'] / 100:,.0f}" if st.get("paid", 0) >= 100 else "пока без выплат")
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
