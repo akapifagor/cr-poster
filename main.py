@@ -187,20 +187,20 @@ def caption(o, det):
         L.append(f"🏆 <b>Пул {money(budget)}</b>, делится по просмотрам")
         L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
     else:
-        L.append("💰 <b>Ставки за 1K просмотров:</b>")
+        L.append("<b>Ставки за 1K просмотров:</b>")
         for p in o.get("payouts") or []:
             s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
             if p.get("maxPayoutCents"): s += f" (до {money(p['maxPayoutCents'])} за пост)"
             L.append(s)
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
-    L.append("📝 По заявке" if o.get("requiresApplication") else "🔓 Вход без заявки")
+    if o.get("requiresApplication"): L.append("📝 По заявке")
     if CFG.get("show_advertiser"):  # off by user request 2026-11-05
         org = (det.get("organization") or {}).get("name") or o.get("organizationName")
         if org: L.append(f"🏢 {html.escape(org)}")
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
-    tail = f'\n\n{html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a>' if sig.get("url") else ""
+    tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
     s = "\n".join(L)
     lim = 1024 - len(tail)  # signature is never cut off; drop optional lines, never cut HTML mid-tag
     while len(s) > lim and len(L) > 4:
