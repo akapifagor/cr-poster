@@ -206,6 +206,7 @@ def caption(o, det):
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>', ""]
     if o.get("payoutType") == "pool":
         L.append(f"🏆 <b>Пул {money(budget)}</b>, делится по просмотрам")
+        L.append("⏳ Выплата после закрытия пула")
         L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
