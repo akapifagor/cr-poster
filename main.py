@@ -144,10 +144,14 @@ def ai_classify(o, det):
     body = {"contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "responseSchema": AI_SCHEMA}}
     try:
-        for i in range(3):
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{ai_model(key)}:generateContent"
+        busy = 0
+        for i in range(5):
+            m = ai_model(key)
+            if busy >= 2: m = CFG.get("ai_fallback_model", "gemini-2.5-flash")  # main model overloaded
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent"
             r = requests.post(url, params={"key": key}, json=body, timeout=40)
             if r.status_code == 404 and i == 0: ai_model(key, force=True); continue
+            if r.status_code in (500, 502, 503, 504): busy += 1; time.sleep(4); continue
             if r.status_code == 429: time.sleep(20); continue
             if r.status_code >= 400: print("ai http", r.status_code, r.text[:300])
             r.raise_for_status()
