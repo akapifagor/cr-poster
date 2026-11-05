@@ -1,5 +1,8 @@
 name: Emoji ids (from Saved Messages)
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      order: {description: "Separate messages order, e.g. telegram,instagram,youtube,x (empty = one labelled message)", default: ""}
 permissions: {contents: write}
 jobs:
   run:
@@ -14,6 +17,7 @@ jobs:
           TG_API_ID: ${{ secrets.TG_API_ID }}
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
           TG_SESSION: ${{ secrets.TG_SESSION }}
+          EMOJI_ORDER: ${{ inputs.order }}
       - run: |
           git config user.name bot; git config user.email bot@users.noreply.github.com
           git add config.json; git diff --cached --quiet || (git commit -m "emoji ids" && git push)
