@@ -323,7 +323,7 @@ def main():
     # only genuinely fresh offers: anything created >48h ago that we never saw (deeper pages, old offers resurfacing) is skipped silently
     cut = datetime.now(timezone.utc) - timedelta(hours=int(CFG.get("max_age_hours", 48)))
     def fresh(o):
-        t = parse_ts(o.get("createdAt") or o.get("launchedAt"))
+        t = parse_ts(o.get("listedAt") or o.get("launchDate") or o.get("createdAt"))  # listedAt = went public; createdAt can be a days-old draft
         return t is None or t > cut  # unknown date -> treat as fresh (never silently drop a new offer)
     stale = {o["id"] for o in camps if o["id"] not in seen and not fresh(o)}
     if stale: print(f"skipped old unseen: {len(stale)}"); seen |= stale
