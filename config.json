@@ -1,0 +1,18 @@
+{
+  "channel": "@YOUR_CHANNEL",
+  "link_template": "",
+  "platform_emoji": {
+    "x": "",
+    "tiktok": "",
+    "instagram": "",
+    "youtube": ""
+  },
+  "first_run_post": 3,
+  "max_per_run": 15,
+  "signature": {
+    "prefix": "By",
+    "text": "A.k.a Pifagor",
+    "url": "https://t.me/+zhbtSMa6qk4wZTJi"
+  },
+  "ai_model": "gemini-2.5-flash-lite"
+}
