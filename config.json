@@ -15,5 +15,5 @@
     "url": "https://t.me/+zhbtSMa6qk4wZTJi"
   },
   "ai_model": "gemini-3.5-flash-lite",
-  "ai_fallback_model": "gemini-2.5-flash"
+  "ai_fallback_model": "gemini-3.5-flash"
 }

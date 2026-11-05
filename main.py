@@ -54,7 +54,7 @@ def get(url, **kw):
         time.sleep(3 * (i + 1))
     r.raise_for_status()
 
-def newest(pages=3):
+def newest(pages=10):
     out, cur = [], None
     for _ in range(pages):
         q = {"limit": 100, "sortBy": "newest"}
@@ -196,7 +196,12 @@ def caption(o, det):
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     L.append("📝 По заявке" if o.get("requiresApplication") else "🔓 Вход без заявки")
     org = (det.get("organization") or {}).get("name") or o.get("organizationName")
-    if org: L.append(f"🏢 {html.escape(org)}")
+    if org:
+        st = ORG.get(o.get("organizationId")) or {}
+        bits = ["✅ верифицирован" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "не верифицирован"]
+        if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
+        if st.get("paid"): bits.append(f"уже выплатил {money(st['paid'])}")
+        L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
     tail = f'\n\n{html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a>' if sig.get("url") else ""
@@ -247,11 +252,26 @@ def ai_test():
         time.sleep(4)  # stay under free-tier per-minute limit
     print(f"\nAI ответил на {n_ai}/{len(data)}, футаж верно: {ai_ok}/{n_ai}; правила: {rule_ok}/{len(data)}")
 
+ORG = {}
+def org_stats(camps):
+    """Advertiser track record from Content Rewards public data (active campaigns only; CR has no public rating)."""
+    for o in camps:
+        a = ORG.setdefault(o.get("organizationId"), {"n": 0, "paid": 0})
+        a["n"] += 1; a["paid"] += ((o.get("metrics") or {}).get("paidOutCents") or 0)
+
 def main():
     if "--ai-test" in sys.argv: return ai_test()
     dry = "--dry" in sys.argv
     seen = set(json.load(open(SEEN))) if os.path.exists(SEEN) else None
-    camps = [o for o in newest() if o.get("status") == "active" and not o.get("private")]
+    allc = newest(); org_stats(allc)
+    camps = [o for o in allc if o.get("status") == "active" and not o.get("private")]
+    if "--backfill" in sys.argv:  # test: post the N newest offers again, state untouched
+        n = int(sys.argv[sys.argv.index("--backfill") + 1])
+        items = [(o, get(f"{API}/{o['id']}").get("data") or {}) for o in camps[:n]][::-1]
+        if dry:
+            for o, d in items: print(caption(o, d), "\n" + "-" * 40)
+        else: asyncio.run(post(items, set(seen or ())))
+        return
     if seen is None:  # first run: remember everything, post only the newest N for a test
         n = int(CFG.get("first_run_post", 0)); seen = {o["id"] for o in camps[n:]}
     new = [o for o in camps if o["id"] not in seen][::-1][: int(CFG.get("max_per_run", 15))]
