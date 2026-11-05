@@ -72,7 +72,7 @@ def money(c, rate=False):
 def emoji(p):
     fb = PLAT_FALLBACK.get(p, "•")
     eid = (CFG.get("platform_emoji") or {}).get(p)
-    return f'<tg-emoji emoji-id="{eid}">{fb}</tg-emoji>' if eid else fb
+    return f'<tg-emoji emoji-id="{eid}">⭐</tg-emoji>' if eid else fb  # inner text must be a real emoji
 
 # Footage detection (heuristic on the offer description; EN + common IT/ES/FR/PT/DE words)
 FOOT_GIVE = r"(source footage|our footage|(footage|videos?|clips?|episodes?|assets?|content|materials?) (is |are )?(provided|supplied|attached|included|below|linked|in the (drive|folder|brief|link))|(provided|supplied|official|attached) (footage|videos?|clips?|episodes?|assets?|content|materials?|b-?roll)|(use|clip|edit) (the|our) \d* ?(official )?(videos?|clips?|footage|episodes?)( below)?|raw footage|google drive|drive\.google|dropbox|mega\.nz|we provide|we('ll| will) (send|provide|give)|b-?roll|content library|asset (pack|folder|library)|templates? (provided|below|included)|material(e)? fornit|materiale fornito|material proporcionado|vid[eé]os? fournies?|rushs?)"
@@ -195,13 +195,9 @@ def caption(o, det):
     L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
     if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
     L.append("📝 По заявке" if o.get("requiresApplication") else "🔓 Вход без заявки")
-    org = (det.get("organization") or {}).get("name") or o.get("organizationName")
-    if org:
-        st = ORG.get(o.get("organizationId")) or {}
-        bits = ["✅ верифицирован" if o.get("organizationVerified") or (det.get("organization") or {}).get("verified") else "не верифицирован"]
-        if st.get("n", 0) > 1: bits.append(f"{st['n']} активных кампаний")
-        if st.get("paid"): bits.append(f"уже выплатил {money(st['paid'])}")
-        L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
+    if CFG.get("show_advertiser"):  # off by user request 2026-11-05
+        org = (det.get("organization") or {}).get("name") or o.get("organizationName")
+        if org: L.append(f"🏢 {html.escape(org)}")
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>']
     sig = CFG.get("signature") or {}
     tail = f'\n\n{html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a>' if sig.get("url") else ""
