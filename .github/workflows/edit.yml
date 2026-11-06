@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       n: {description: "How many latest channel messages to check", default: "100"}
+      below: {description: "Only messages with id below this (0 = all)", default: "0"}
 concurrency: {group: poster}
 jobs:
   run:
@@ -12,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
-      - run: python edit.py ${{ inputs.n }}
+      - run: python edit.py ${{ inputs.n }} ${{ inputs.below }}
         env:
           TG_API_ID: ${{ secrets.TG_API_ID }}
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
