@@ -104,13 +104,13 @@ def footage(o, det):
 # ---------- AI classification (Gemini free tier); regex rules above are the fallback ----------
 FOOT_LABEL = {
     "brand_provides": "✅|да, бренд даёт готовые видео/исходники",
-    "public_source": "✅|да, нарезка из открытых видео/стримов автора, качаешь сам",
+    "public_source": "✅|да, нарезка из открытых видео/стримов, качаешь сам",
     "own_content": "❌|нет, свой контент (UGC/тренд/звук)",
     "unclear": "❔|не указано, смотри бриф",
 }
 AI_PROMPT = """You classify a short-form video clipping/UGC campaign for a Russian Telegram channel.
 Return JSON only.
-niches: 1-3 short Russian niche labels describing what the content is actually about (e.g. "Стримеры", "Гемблинг 18+", "AI", "Музыка", "Крипта", "Игры: Roblox", "Фитнес", "Кино и сериалы", "Приложения", "Бьюти", "Подкасты", "Спорт", "Финансы"). Judge by the real product/person being promoted, not only the brand's categories, and NOT by the edit styles or visuals used (a song pushed through fashion/car edits is "Музыка", not "Мода"). Do not add a niche unless it is clearly what the campaign promotes. Casino, betting, gambling streamers -> include "Гемблинг 18+".
+niches: 1-3 short Russian niche labels describing what the content is actually about (e.g. "Стримеры", "Гемблинг 18+", "AI", "Музыка", "Крипта", "Игры: Roblox", "Фитнес", "Кино и сериалы", "Приложения", "Бьюти", "Подкасты", "Спорт", "Финансы"). Judge by the real product/person being promoted, not only the brand's categories, and NOT by the edit styles or visuals used (a song pushed through fashion/car edits is "Музыка", not "Мода"). Do not add a niche unless it is clearly what the campaign promotes. A movie/series/docuseries/show promo always includes "Кино и сериалы" first, then its topic. Casino, betting, gambling streamers -> include "Гемблинг 18+".
 footage: one of
   brand_provides = the brand gives the creator ready video files/footage/episodes/clips/assets/templates (drive, folder, "below", "provided", "supplied", "official videos", "content folder", raw videos ready);
   public_source = creator must cut clips from the person's public streams/VODs/YouTube/podcast/socials/film themselves, no files handed over;
