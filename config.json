@@ -17,5 +17,6 @@
   },
   "ai_model": "gemini-3.5-flash-lite",
   "ai_fallback_model": "gemini-3.5-flash",
-  "max_age_hours": 48
+  "max_age_hours": 48,
+  "spread_minutes": 25
 }

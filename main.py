@@ -110,7 +110,7 @@ FOOT_LABEL = {
 }
 AI_PROMPT = """You classify a short-form video clipping/UGC campaign for a Russian Telegram channel.
 Return JSON only.
-niches: 1-3 short Russian niche labels describing what the content is actually about (e.g. "Стримеры", "Гемблинг 18+", "AI", "Музыка", "Крипта", "Игры: Roblox", "Фитнес", "Кино и сериалы", "Приложения", "Бьюти", "Подкасты", "Спорт", "Финансы"). Judge by the real product/person, not only the brand's categories. Casino, betting, gambling streamers -> include "Гемблинг 18+".
+niches: 1-3 short Russian niche labels describing what the content is actually about (e.g. "Стримеры", "Гемблинг 18+", "AI", "Музыка", "Крипта", "Игры: Roblox", "Фитнес", "Кино и сериалы", "Приложения", "Бьюти", "Подкасты", "Спорт", "Финансы"). Judge by the real product/person being promoted, not only the brand's categories, and NOT by the edit styles or visuals used (a song pushed through fashion/car edits is "Музыка", not "Мода"). Do not add a niche unless it is clearly what the campaign promotes. Casino, betting, gambling streamers -> include "Гемблинг 18+".
 footage: one of
   brand_provides = the brand gives the creator ready video files/footage/episodes/clips/assets/templates (drive, folder, "below", "provided", "supplied", "official videos", "content folder", raw videos ready);
   public_source = creator must cut clips from the person's public streams/VODs/YouTube/podcast/socials/film themselves, no files handed over;
@@ -118,6 +118,7 @@ footage: one of
   unclear = the text does not say.
 footage_note: up to 8 Russian words with the key detail (e.g. "50+ сырых видео в папке", "клипы со стримов Twitch", "снимаешь себя с приложением"); empty if unclear.
 format: if "Content types" is "-", 1-3 Russian words for what to make (e.g. "Клиппинг", "UGC с лицом", "Слайдшоу", "Репосты"); otherwise empty.
+Edits made from movie/TV/anime/film scenes or other public footage (e.g. "movie + TV edits") are public_source.
 "Clipping" campaigns about a streamer/podcaster/creator with no files mentioned are public_source.
 Campaign name: {name}
 Advertiser: {org}
@@ -185,7 +186,7 @@ def ai_classify(o, det):
     return None
 
 def caption(o, det):
-    name = html.escape(o["name"].strip())
+    name = html.escape(re.sub(r"(?i)\b([a-z0-9-]+)\.(com|io|app|net|org|gg|ai|co|xyz|tv|fun)\b", "\\1.\u2060\\2", o["name"].strip()))  # stop Telegram auto-linking "Oceans.com" in titles
     ai = ai_classify(o, det)
     cats = list(dict.fromkeys(NICHE.get(c["id"], c["name"]) for c in o.get("categories") or []))
     if ai and ai.get("niches"): cats = list(dict.fromkeys(n.strip() for n in ai["niches"] if n.strip()))[:3]
@@ -198,7 +199,7 @@ def caption(o, det):
     if not types and ai and ai.get("format", "").strip(): types = [ai["format"].strip()]
     L = [f"<b>{name}</b>", ""]
     if cats: L.append(f"🏷 <b>Ниша:</b> {html.escape(' · '.join(cats))}")
-    if types: L.append(f"🎬 <b>Формат:</b> {html.escape(', '.join(types))}")
+    if types: L.append(f"🎬 <b>Формат:</b> {html.escape(', '.join(types[:3]))}")
     fk = ai["footage"] if ai else footage(o, det)
     icon, foot = FOOT_LABEL[fk].split("|")
     if ai and ai.get("footage_note", "").strip() and fk != "unclear": foot += f" ({html.escape(ai['footage_note'].strip())})"
@@ -206,8 +207,9 @@ def caption(o, det):
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>', ""]
     if o.get("payoutType") == "pool":
         L.append(f"🏆 <b>Пул {money(budget)}</b>, делится по просмотрам")
+        pl = sorted(o.get("platforms", []), key=lambda p: ORDER.index(p) if p in ORDER else 99)
+        L.append("Площадки: " + " ".join(emoji(p) for p in pl))
         L.append("⏳ Выплата после закрытия пула")
-        L.append("   " + " ".join(emoji(p) for p in o.get("platforms", [])))
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
         pays = sorted(o.get("payouts") or [], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
@@ -265,12 +267,15 @@ async def post(items, seen):
     from telethon.sessions import StringSession
     async with TelegramClient(StringSession(os.environ["TG_SESSION"]), int(os.environ["TG_API_ID"]), os.environ["TG_API_HASH"]) as cl:
         ch = await cl.get_entity(CFG["channel"])
-        for o, det in items:
+        gap = int(CFG.get("spread_minutes", 25)) * 60 // max(len(items), 1)  # several offers at once -> Telegram schedules them apart, no burst
+        t0 = datetime.now(timezone.utc)
+        for i, (o, det) in enumerate(items):
             cap = caption(o, det); img = banner(o)
-            if img: await cl.send_file(ch, img, caption=cap, parse_mode="html")
-            else: await cl.send_message(ch, cap, parse_mode="html", link_preview=False)
+            when = t0 + timedelta(seconds=gap * i) if i and gap >= 60 else None
+            if img: await cl.send_file(ch, img, caption=cap, parse_mode="html", schedule=when)
+            else: await cl.send_message(ch, cap, parse_mode="html", link_preview=False, schedule=when)
             seen.add(o["id"]); json.dump(sorted(seen), open(SEEN, "w"))
-            print("posted", o["name"]); await asyncio.sleep(3)
+            print("posted" if not when else f"scheduled +{gap * i // 60}m", o["name"]); await asyncio.sleep(3)
 
 def ai_test():
     """python main.py --ai-test : compare AI and rules with hand labels in tests/ai_labels.json (no posting)."""
