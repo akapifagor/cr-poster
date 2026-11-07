@@ -185,6 +185,9 @@ def ai_classify(o, det):
         print("ai fail", o["id"], str(e)[:200])
     return None
 
+def tiers_shown(o, det):
+    return o.get("payoutType") == "cpm" and bool(((det.get("configuration") or {}).get("geoRates") or {}).get("tiers"))
+
 def caption(o, det):
     name = html.escape(re.sub(r"(?i)\b([a-z0-9-]+)\.(com|io|app|net|org|gg|ai|co|xyz|tv|fun)\b", "\\1.\u2060\\2", o["name"].strip()))  # stop Telegram auto-linking "Oceans.com" in titles
     ai = ai_classify(o, det)
@@ -218,26 +221,57 @@ def caption(o, det):
         L.append(f"💼 <b>Ретейнер:</b> {money(amt)} {cyc}".rstrip() + (f" за {n} роликов (~{money(amt / n)} за ролик)" if amt and n else ""))
         pl = sorted({p["platform"] for p in rp} or set(o.get("platforms", [])), key=lambda p: ORDER.index(p) if p in ORDER else 99)
         L.append("Площадки: " + " ".join(emoji(p) for p in pl))
-    else:
+    elif o.get("payoutType") == "perPost" or any(p.get("payoutType") == "perPost" for p in o.get("payouts") or []):
+        pp = sorted([p for p in o.get("payouts") or [] if p.get("payoutType") == "perPost"], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
+        amts = {p.get("amountCents") or 0 for p in pp}
+        if len(amts) == 1:
+            L.append(f"💲 <b>Фикс за пост:</b> {money(next(iter(amts)))} (не зависит от просмотров)")
+            L.append("Площадки: " + " ".join(emoji(p["platform"]) for p in pp))
+        else:
+            L.append("💲 <b>Фикс за пост</b> (не зависит от просмотров):")
+            for p in pp: L.append(f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p.get('amountCents') or 0)}</b>")
+    elif o.get("payoutType") == "cpm" or any("rateCents" in p for p in o.get("payouts") or []):
+        geo = ((det.get("configuration") or {}).get("geoRates") or {}) if o.get("geoPriced") else {}
+        tiers = geo.get("tiers") or []
+        def gtiers(pl):  # [(label, rate cents)] for one platform, best first
+            return sorted(((t.get("label") or "/".join(t.get("countries") or []), t.get("rate") or 0) for t in tiers if t.get("platform") == pl), key=lambda x: -x[1])
+        def top(p):
+            return max([p.get("rateCents") or 0] + [r for _, r in gtiers(p["platform"])])
         L.append("<b>Ставки за 1K просмотров:</b>")
-        pays = sorted([p for p in o.get("payouts") or [] if p.get("rateCents")], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
+        pays = sorted([p for p in o.get("payouts") or [] if top(p)], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
         def kviews(n):
             return f"{n / 1000:g}K" if n >= 1000 else str(int(n))
         def rng(p):  # max payout per post + views a post needs before it pays (CR "Min payout" / rate)
-            lo, hi, r = p.get("minPayoutCents") or 0, p.get("maxPayoutCents") or 0, p.get("rateCents") or 0
+            lo, hi, r = p.get("minPayoutCents") or 0, p.get("maxPayoutCents") or 0, top(p)
             bits = [f"до {money(hi)}"] if hi else []
             if lo and r: bits.append(f"оплата от {kviews(round(lo / r * 1000, -1 if lo / r < 10 else 2))} просмотров")
             return ", ".join(bits)
         rngs = {rng(p) for p in pays}
         same = len(rngs) == 1  # one rule for all platforms -> its own line, rate lines stay short
         for p in pays:
-            s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
+            gt = gtiers(p["platform"])
+            if gt:  # geo-priced: rate per audience country
+                rest = p.get("rateCents") or 0
+                by = {}
+                for lab, r in gt:
+                    if r: by.setdefault(r, []).append(lab)
+                parts = [f"<b>{money(r, True)}</b> {html.escape('/'.join(labs))}" for r, labs in sorted(by.items(), key=lambda x: -x[0])]
+                parts.append(f"<b>{money(rest, True)}</b> остальной мир" if rest else "остальной мир не оплачивается")
+                s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - " + ", ".join(parts)
+            else:
+                s = f"{emoji(p['platform'])} {PLAT.get(p['platform'], p['platform'])} - <b>{money(p['rateCents'], True)}</b>"
             if not same and rng(p): s += f" ({rng(p)})"
             L.append(s)
-        if same and next(iter(rngs)): L.append(f"📌 <b>За пост:</b> {next(iter(rngs))}")
+        if not pays: L.append("ставки в оффере (зависят от гео)" if o.get("geoPriced") else "ставки в оффере")
+        if same and pays and next(iter(rngs)): L.append(f"📌 <b>За пост:</b> {next(iter(rngs))}")
+    else:  # unknown future payout type: post anyway, point to the offer
+        print("WARN unknown payoutType", o.get("payoutType"), o.get("id"))
+        L.append(f"💰 <b>Оплата:</b> {html.escape(str(o.get('payoutType') or 'не указан'))}, условия в оффере")
     L.append("")  # budget/advertiser block separated from rates
-    L.append(f"💵 <b>Бюджет:</b> {money(budget)}" + (f", потрачено {pct:.0f}%" if spent else ""))
-    if o.get("geoPriced"): L.append("🌍 Ставка зависит от гео аудитории")
+    pb = [p for p in o.get("payouts") or [] if p.get("budgetCents")]  # some offers split the budget per platform
+    pbs = f" ({', '.join(PLAT.get(p['platform'], p['platform']) + ' ' + money(p['budgetCents']) for p in sorted(pb, key=lambda p: ORDER.index(p['platform']) if p['platform'] in ORDER else 99))})" if pb and len({p['budgetCents'] for p in pb}) > 1 else ""
+    L.append(f"💵 <b>Бюджет:</b> {money(budget)}{pbs}" + ((", потрачено <1%" if pct < 1 else f", потрачено {pct:.0f}%") if spent else ""))
+    if o.get("geoPriced") and not tiers_shown(o, det): L.append("🌍 Ставка зависит от гео аудитории")
     if o.get("requiresApplication"): L.append("📝 По заявке")
     org = (det.get("organization") or {}).get("name") or o.get("organizationName")
     if org:
