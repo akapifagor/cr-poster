@@ -210,9 +210,17 @@ def caption(o, det):
         pl = sorted(o.get("platforms", []), key=lambda p: ORDER.index(p) if p in ORDER else 99)
         L.append("Площадки: " + " ".join(emoji(p) for p in pl))
         L.append("⏳ Выплата после закрытия пула")
+    elif any(p.get("payoutType") == "retainer" for p in o.get("payouts") or []) or o.get("payoutType") == "retainer":
+        rp = [p for p in o.get("payouts") or [] if p.get("payoutType") == "retainer"]
+        r0 = rp[0] if rp else {}
+        amt, n = r0.get("amountCents") or 0, r0.get("deliverablesTotal") or 0
+        cyc = {"monthly": "в месяц", "weekly": "в неделю"}.get(r0.get("cycleLength"), "")
+        L.append(f"💼 <b>Ретейнер:</b> {money(amt)} {cyc}".rstrip() + (f" за {n} роликов (~{money(amt / n)} за ролик)" if amt and n else ""))
+        pl = sorted({p["platform"] for p in rp} or set(o.get("platforms", [])), key=lambda p: ORDER.index(p) if p in ORDER else 99)
+        L.append("Площадки: " + " ".join(emoji(p) for p in pl))
     else:
         L.append("<b>Ставки за 1K просмотров:</b>")
-        pays = sorted(o.get("payouts") or [], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
+        pays = sorted([p for p in o.get("payouts") or [] if p.get("rateCents")], key=lambda p: ORDER.index(p["platform"]) if p["platform"] in ORDER else 99)
         def kviews(n):
             return f"{n / 1000:g}K" if n >= 1000 else str(int(n))
         def rng(p):  # max payout per post + views a post needs before it pays (CR "Min payout" / rate)
@@ -270,7 +278,10 @@ async def post(items, seen):
         gap = int(CFG.get("spread_minutes", 25)) * 60 // max(len(items), 1)  # several offers at once -> Telegram schedules them apart, no burst
         t0 = datetime.now(timezone.utc)
         for i, (o, det) in enumerate(items):
-            cap = caption(o, det); img = banner(o)
+            try: cap = caption(o, det)
+            except Exception as e:  # one odd offer (new CR payout type etc.) must not block the queue
+                print("caption fail, skipped", o.get("id"), o.get("name"), repr(e)); continue
+            img = banner(o)
             when = t0 + timedelta(seconds=gap * i) if i and gap >= 60 else None
             if img: await cl.send_file(ch, img, caption=cap, parse_mode="html", schedule=when)
             else: await cl.send_message(ch, cap, parse_mode="html", link_preview=False, schedule=when)
