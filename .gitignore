@@ -1,2 +1,11 @@
 __pycache__/
 *.session
+*.session-journal
+.venv/
+venv/
+.env
+.env.*
+*.pem
+*.key
+seen.json.tmp
+.DS_Store
