@@ -103,6 +103,26 @@ class Helpers(unittest.TestCase):
         self.assertEqual(M.clean_niches(["Игры: прочее", "Музыка", "Игры: GTA 6", "Здоровье и фитнес", "Подкасты", "AI"]),
                          ["Музыка", "Игры: GTA 6", "Подкасты"])
 
+    def test_clean_note(self):
+        for raw, want in [("Футюдж из официальной папки с контентом", "видео из официальной папки с контентом"),  # post #279
+                          ("Использовать футуэдж из банка контента", "использовать видео из банка контента"),  # post #137
+                          ("готовые футажи в папке.", "готовые видео в папке"),
+                          ("Клипы со стримов Twitch", "клипы со стримов Twitch"),
+                          ("YouTube-видео автора", "YouTube-видео автора"),
+                          ("clips from his streams", ""),  # English answer -> no note
+                          ("  «футбольные хайлайты»  ", "футбольные хайлайты")]:
+            self.assertEqual(M.clean_note(raw), want, raw)
+
+    def test_ai_postprocess(self):
+        r = M.ai_postprocess({"niches": ["Игры", "Стримеры", "Игры: прочее"], "game": "GTA 6", "footage": "public_source",
+                              "footage_note": "Клипы со стримов", "format": ["Клиппинг", "Танцы"]})
+        self.assertEqual(r["niches"], ["Игры: GTA 6", "Стримеры"])
+        self.assertEqual(r["footage_note"], "клипы со стримов")
+        self.assertEqual(r["format"], ["Клиппинг"])
+        self.assertEqual(M.ai_postprocess({"niches": ["Музыка"], "game": "GTA 6", "footage": "unclear", "footage_note": "x", "format": []})["niches"],
+                         ["Музыка"])  # a game title without the games niche is ignored
+        self.assertIsNone(M.ai_postprocess({"niches": [], "footage": "maybe"}))
+
     def test_captions_are_valid_and_fit(self):
         for k, f in FX.items():
             c = M.caption(f["offer"], f["detail"])

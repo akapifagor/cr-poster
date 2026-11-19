@@ -173,43 +173,63 @@ FOOT_LABEL = {
     "own_content": "❌|нет, свой контент (UGC/тренд/звук)",
     "unclear": "❔|не указано, смотри бриф",
 }
-AI_PROMPT = """You classify a short-form video clipping/UGC campaign for a Russian Telegram channel.
-Return JSON only.
-niches: 1-3 labels, most important first, copied exactly from this list: {niche_list}.
-  For a campaign about one specific video game use "Игры: <official game title in Latin letters>" (e.g. "Игры: Roblox", "Игры: GTA 6", "Игры: Call of Duty") instead of "Игры".
-  Judge by what the campaign actually promotes (the product, app, person, song, film or show), NOT by the edit styles or footage used: a song pushed through movie, fashion, car or anime edits is "Музыка" only; clips of a streamer are "Стримеры"; clips of a podcast are "Подкасты".
+FORMATS = list(dict.fromkeys(CTYPE.values()))
+AI_PROMPT = """You classify a short-form video clipping/UGC campaign for a Russian Telegram channel. Return JSON only.
+niches: 1-3 values, most important first. Judge by what the campaign actually promotes (the product, app, person, song, film or show), NOT by the edit styles or footage used: a song pushed through movie, fashion, car or anime edits is "Музыка" only; clips of a streamer are "Стримеры"; clips of a podcast are "Подкасты".
   "Кино и сериалы" only when the promoted thing is a film, TV/streaming series, docuseries or film trailer; never for YouTube shows, podcasts, game trailers or edits that merely reuse movie scenes.
   "Подкасты" only when the source really is a podcast. "Шоу и интервью" for YouTube shows, challenge shows and interviews that are not podcasts.
   "Гемблинг 18+" only when the campaign promotes a casino, betting, sweepstakes, poker or a gambling streamer; never because the brief forbids gambling content.
+game: when the campaign is about one specific video game, its official title in Latin letters as the publisher writes it (e.g. "Roblox", "GTA 6", "Call of Duty", "Football Manager 27") and "Игры" among niches; otherwise "".
 footage: one of
   brand_provides = the brand gives the creator ready video files/footage/episodes/clips/assets/templates (drive, folder, "below", "provided", "supplied", "official videos", "content folder", raw videos ready);
   public_source = creator must cut clips from the person's public streams/VODs/YouTube/podcast/socials/film themselves, no files handed over;
   own_content = creator films or makes original content (UGC, talking head, skits, trends, slideshows, sound/song campaigns, screen recordings, recording own gameplay);
   unclear = the text does not say.
-footage_note: up to 8 Russian words with the key detail (e.g. "50+ сырых видео в папке", "клипы со стримов Twitch", "снимаешь себя с приложением"); empty if unclear.
-format: if "Content types" is "-", 1-3 Russian words for what to make (e.g. "Клиппинг", "UGC с лицом", "Слайдшоу", "Репосты"); otherwise empty.
-Edits made from movie/TV/anime/film scenes or other public footage (e.g. "movie + TV edits") are public_source.
-"Clipping" campaigns about a streamer/podcaster/creator with no files mentioned are public_source.
+  Edits made from movie/TV/anime/film scenes or other public footage (e.g. "movie + TV edits") are public_source.
+  "Clipping" campaigns about a streamer/podcaster/creator with no files mentioned are public_source.
+footage_note: the key detail about the source material in 3-8 words of plain, correctly spelled Russian, starting with a lowercase letter, no final period (e.g. "50+ сырых видео в папке", "клипы со стримов Twitch", "снимаешь себя с приложением"). Use the words "видео", "исходники", "клипы", "запись экрана"; never write "футаж" or any other transliteration of "footage". Keep names of brands, platforms and people as written (Twitch, YouTube, Google Drive). "" if footage is unclear.
+format: only if "Content types" below is "-": 1-3 values for what the creator makes; otherwise [].
 Campaign name: {name}
 Advertiser: {org}
 Brand categories: {cats}
 Content types: {types}
 Description and guidelines: {desc}"""
-AI_SCHEMA = {"type": "OBJECT", "properties": {
-    "niches": {"type": "ARRAY", "items": {"type": "STRING"}},
+AI_SCHEMA = {"type": "OBJECT", "properties": {  # enums: Gemini can only answer with valid labels
+    "niches": {"type": "ARRAY", "items": {"type": "STRING", "enum": NICHES}, "maxItems": 3},
+    "game": {"type": "STRING"},
     "footage": {"type": "STRING", "enum": list(FOOT_LABEL)},
-    "footage_note": {"type": "STRING"}, "format": {"type": "STRING"}}, "required": ["niches", "footage", "footage_note"]}
-_ai_off_until = 0.0  # daily free quota used up -> rules until then
+    "footage_note": {"type": "STRING"},
+    "format": {"type": "ARRAY", "items": {"type": "STRING", "enum": FORMATS}, "maxItems": 3}},
+    "required": ["niches", "game", "footage", "footage_note", "format"],
+    "propertyOrdering": ["niches", "game", "footage", "footage_note", "format"]}
+_ai_off = {}  # model -> time it may be tried again (its daily free quota is used up / it is gone)
 _ai_model = None
 def clean_niches(ns):
     """keep only labels from the vocabulary (plus "Игры: <title>"), max 3"""
     ns = [n.strip() for n in ns or [] if isinstance(n, str)]
     return list(dict.fromkeys(n for n in ns if n in NICHES or GAME_NICHE.fullmatch(n)))[:3]
+def clean_note(s):
+    """footage note as shown in the post: one style, no mangled words, no English-only answers"""
+    s = re.sub(r"\s+", " ", str(s or "")).strip(" .;:,\"'«»()[]")
+    s = re.sub(r"(?i)\bф[ую]т[а-яё]*ж[а-яё]*", "видео", s)  # "футаж", "футюдж", "футуэдж": the model mangles "footage"
+    if not re.search(r"[а-яё]", s, re.I): return ""  # English or junk -> no note rather than a wrong one
+    if len(s) > 70: s = s[:70].rsplit(" ", 1)[0]
+    if re.match(r"[А-ЯЁ][а-яё]+(\s|$)", s): s = s[0].lower() + s[1:]  # "Клипы со стримов" -> "клипы со стримов"; keeps "YouTube", "ТНТ"
+    return s
+def ai_postprocess(res):
+    """validated AI answer or None"""
+    if not isinstance(res, dict) or res.get("footage") not in FOOT_LABEL: return None
+    ns = clean_niches(res.get("niches"))
+    game = re.sub(r"\s+", " ", str(res.get("game") or "")).strip(" \"'«»")
+    if game and "Игры" in ns and GAME_NICHE.fullmatch(f"Игры: {game}"): ns[ns.index("Игры")] = f"Игры: {game}"
+    fmt = res.get("format") if isinstance(res.get("format"), list) else []
+    return {"niches": ns, "footage": res["footage"], "footage_note": clean_note(res.get("footage_note")) if res["footage"] != "unclear" else "",
+            "format": [f for f in dict.fromkeys(fmt) if f in FORMATS][:3], "raw_note": str(res.get("footage_note") or "")}
 def ai_model(key, force=False):
-    """config ai_model; if Google 404s it (model retired), pick the newest *flash-lite*, else *flash* model."""
+    """AI_MODEL env / config ai_model; if Google 404s it (model retired), pick the newest *flash-lite*, else *flash* model."""
     global _ai_model
     if _ai_model and not force: return _ai_model
-    if not force: _ai_model = CFG.get("ai_model", "gemini-2.5-flash-lite"); return _ai_model
+    if not force: _ai_model = os.environ.get("AI_MODEL") or CFG.get("ai_model", "gemini-2.5-flash-lite"); return _ai_model
     try:
         ms = requests.get("https://generativelanguage.googleapis.com/v1beta/models", params={"pageSize": 1000}, headers={"x-goog-api-key": key}, timeout=30).json().get("models", [])
         names = [m["name"].split("/")[-1] for m in ms if "generateContent" in m.get("supportedGenerationMethods", [])]
@@ -222,39 +242,44 @@ def ai_model(key, force=False):
     except Exception as e:
         print("model list fail", str(e)[:200])
     return _ai_model
+def ai_models(key):
+    """main model, then the fallback; models whose daily quota is used up are skipped until it resets"""
+    chain = [ai_model(key), os.environ.get("AI_FALLBACK_MODEL") or CFG.get("ai_fallback_model")]
+    return [m for m in dict.fromkeys(chain) if m and time.time() >= _ai_off.get(m, 0)]
 def ai_classify(o, det):
-    global _ai_off_until
     key = os.environ.get("GEMINI_API_KEY")
-    if not key or time.time() < _ai_off_until: return None
+    if not key: return None
     types = [t["name"] for t in ((det.get("configuration") or {}).get("content") or {}).get("contentTypes", [])]
     g = ((det.get("configuration") or {}).get("content") or {}).get("guidelines") or ""
-    prompt = AI_PROMPT.format(niche_list=", ".join(f'"{n}"' for n in NICHES), name=o["name"],
-                              org=(det.get("organization") or {}).get("name") or o.get("organizationName") or "-",
+    prompt = AI_PROMPT.format(name=o["name"], org=(det.get("organization") or {}).get("name") or o.get("organizationName") or "-",
                               cats=", ".join(c["name"] for c in o.get("categories") or []), types=", ".join(types) or "-",
                               desc=((o.get("description") or "") + "\n" + (g if isinstance(g, str) else json.dumps(g, ensure_ascii=False)))[:4000])
     body = {"contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "responseSchema": AI_SCHEMA}}
+            "generationConfig": {"temperature": 0, "seed": 7, "responseMimeType": "application/json", "responseSchema": AI_SCHEMA}}
     try:
         busy = 0
-        for i in range(5):
-            m = ai_model(key)
-            if busy >= 2: m = CFG.get("ai_fallback_model", "gemini-2.5-flash")  # main model overloaded
+        for i in range(6):
+            ms = ai_models(key)
+            if not ms: print("ai: free quota of all models used up, rules for now"); return None
+            m = ms[-1] if busy >= 2 else ms[0]  # main model overloaded -> fallback
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent"
             r = requests.post(url, headers={"x-goog-api-key": key}, json=body, timeout=40)  # key in a header: never part of a URL in error logs
-            if r.status_code == 404 and i == 0: ai_model(key, force=True); continue
+            if r.status_code == 404:
+                if m == _ai_model and i == 0: ai_model(key, force=True)
+                else: _ai_off[m] = time.time() + 86400
+                continue
             if r.status_code in (500, 502, 503, 504): busy += 1; time.sleep(4); continue
             if r.status_code == 429:
                 t = r.text
-                if "PerDay" in t or "per day" in t.lower():  # daily free quota: rules until it resets (checked again in an hour)
-                    print("ai: daily free quota used up, rules for the next hour"); _ai_off_until = time.time() + 3600; return None
+                if "PerDay" in t or "per day" in t.lower():  # daily free quota of this model: next model, this one again in an hour
+                    print(f"ai: daily free quota of {m} used up, switching model"); _ai_off[m] = time.time() + 3600; continue
                 m2 = re.search(r'"retryDelay":\s*"(\d+)', t)
                 print("ai 429, wait", m2.group(1) if m2 else 20, "s")
                 time.sleep(min(int(m2.group(1)) + 1 if m2 else 20, 65)); continue
-            if r.status_code >= 400: print("ai http", r.status_code, r.text[:300])
+            if r.status_code >= 400: print("ai http", m, r.status_code, r.text[:300])
             r.raise_for_status()
-            res = json.loads(r.json()["candidates"][0]["content"]["parts"][0]["text"])
-            if res.get("footage") not in FOOT_LABEL: return None
-            res["niches"] = clean_niches(res.get("niches"))
+            res = ai_postprocess(json.loads(r.json()["candidates"][0]["content"]["parts"][0]["text"]))
+            if res: res["model"] = m
             return res
         print("ai: gave up on", o.get("name", "")[:40], "-> rules")  # this offer only
     except Exception as e:
@@ -279,13 +304,13 @@ def caption(o, det):
     budget = o.get("budgetCents") or 0
     spent = ((o.get("metrics") or {}).get("budgetSpentCents") or 0)
     pct = spent / budget * 100 if budget else 0
-    if not types and ai and ai.get("format", "").strip(): types = [ai["format"].strip()]
+    if not types and ai and ai.get("format"): types = ai["format"]
     L = [f"<b>{name}</b>", ""]
     if cats: L.append(f"🏷 <b>Ниша:</b> {html.escape(' · '.join(cats))}")
     if types: L.append(f"🎬 <b>Формат:</b> {html.escape(', '.join(types[:3]))}")
     fk = ai["footage"] if ai else footage(o, det)
     icon, foot = FOOT_LABEL[fk].split("|")
-    note = html.escape(ai["footage_note"].strip()) if ai and ai.get("footage_note", "").strip() and fk != "unclear" else ""
+    note = html.escape(ai["footage_note"]) if ai and ai.get("footage_note") else ""
     L.append(f"{icon} <b>Готовый футаж:</b> {foot}" + (f" ({note})" if note else ""))
     i_foot = len(L) - 1
     L += ["", f'👉 <a href="{link(o)}"><b>Открыть оффер</b></a>', ""]
@@ -611,16 +636,22 @@ async def backfill(items):
             print("backfill", o["name"]); await asyncio.sleep(2)
 
 def ai_test():
-    """python main.py --ai-test : compare AI and rules with hand labels in tests/ai_labels.json (no posting)."""
+    """python main.py --ai-test : compare AI and rules with hand labels in tests/ai_labels.json (no posting).
+    AI_MODEL / AI_FALLBACK_MODEL env vars test another model."""
     data = json.load(open(os.path.join(HERE, "tests", "ai_labels.json"), encoding="utf-8"))
-    ai_ok = rule_ok = n_ai = 0
+    ai_ok = rule_ok = n_ai = fixed = notes = 0
+    models = {}
     for d in data:
         o = d["offer"]; ai = ai_classify(o, {}); rule = footage(o, {})
         rule_ok += rule in d["accept"]
-        if ai: n_ai += 1; ai_ok += ai["footage"] in d["accept"]
-        print(f"{o['name'][:45]:45} | ждём {'/'.join(d['accept']):28} | AI {(ai or {}).get('footage','-'):15} {'OK ' if ai and ai['footage'] in d['accept'] else 'ERR'} | правила {rule:15} | ниши AI: {', '.join((ai or {}).get('niches', []))} | {(ai or {}).get('footage_note','')}")
+        if ai:
+            n_ai += 1; ai_ok += ai["footage"] in d["accept"]; models[ai["model"]] = models.get(ai["model"], 0) + 1
+            raw = ai["raw_note"].strip()
+            if raw: notes += 1; fixed += raw.rstrip(".") != ai["footage_note"]
+        print(f"{o['name'][:45]:45} | ждём {'/'.join(d['accept']):28} | AI {(ai or {}).get('footage','-'):15} {'OK ' if ai and ai['footage'] in d['accept'] else 'ERR'} | правила {rule:15} | ниши AI: {', '.join((ai or {}).get('niches', []))} | {(ai or {}).get('footage_note','')}"
+              + (f" [было: {ai['raw_note']}]" if ai and ai["raw_note"].strip().rstrip(".") != ai["footage_note"] else ""))
         time.sleep(7)  # stay under free-tier per-minute limit
-    print(f"\nAI ответил на {n_ai}/{len(data)}, футаж верно: {ai_ok}/{n_ai}; правила: {rule_ok}/{len(data)}")
+    print(f"\nAI ответил на {n_ai}/{len(data)} ({models}), футаж верно: {ai_ok}/{n_ai}; правила: {rule_ok}/{len(data)}; заметок поправлено чисткой: {fixed}/{notes}")
 
 def main():
     if "--ai-test" in sys.argv: return ai_test()
