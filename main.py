@@ -263,7 +263,9 @@ def ai_classify(o, det):
             if not ms: print("ai: free quota of all models used up, rules for now"); return None
             m = ms[-1] if busy >= 2 else ms[0]  # main model overloaded -> fallback
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent"
-            r = requests.post(url, headers={"x-goog-api-key": key}, json=body, timeout=40)  # key in a header: never part of a URL in error logs
+            try: r = requests.post(url, headers={"x-goog-api-key": key}, json=body, timeout=40)  # key in a header: never part of a URL in error logs
+            except (requests.Timeout, requests.ConnectionError) as e:  # slow/unreachable model: retry, then the fallback model
+                print("ai", m, type(e).__name__); busy += 1; continue
             if r.status_code == 404:
                 if m == _ai_model and i == 0: ai_model(key, force=True)
                 else: _ai_off[m] = time.time() + 86400

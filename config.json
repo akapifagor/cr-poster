@@ -20,8 +20,8 @@
     "text": "A.k.a Pifagor",
     "url": "https://t.me/+zhbtSMa6qk4wZTJi"
   },
-  "ai_model": "gemini-3.5-flash-lite",
-  "ai_fallback_model": "gemini-3.5-flash",
+  "ai_model": "gemini-3.1-flash-lite",
+  "ai_fallback_model": "gemini-3.5-flash-lite",
   "max_age_hours": 48,
   "max_spent_pct": 80,
   "poll_seconds": 60,
