@@ -9,3 +9,4 @@ venv/
 *.key
 seen.json.tmp
 .DS_Store
+.ai/
