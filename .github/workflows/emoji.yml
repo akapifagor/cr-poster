@@ -3,14 +3,16 @@ on:
   workflow_dispatch:
     inputs:
       order: {description: "Separate messages order, e.g. telegram,instagram,youtube,x (empty = one labelled message)", default: ""}
-permissions: {contents: write}
+permissions: {contents: write, actions: write}
+concurrency: {group: poster, cancel-in-progress: false}  # same Telegram session as the poster
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
+        with: {python-version: "3.12", cache: pip}
       - run: pip install -r requirements.txt
       - run: python emoji_ids.py
         env:
@@ -20,4 +22,10 @@ jobs:
           EMOJI_ORDER: ${{ inputs.order }}
       - run: |
           git config user.name bot; git config user.email bot@users.noreply.github.com
-          git add config.json; git diff --cached --quiet || (git commit -m "emoji ids" && git push)
+          git add config.json; git diff --cached --quiet || (git commit -m "emoji ids" && git pull --rebase -q && git push)
+      - name: Restart the poster
+        if: always()
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          busy=$(gh api "repos/${{ github.repository }}/actions/runs?per_page=50" --jq '[.workflow_runs[] | select(.status != "completed" and .id != ${{ github.run_id }} and (.path | test("/(post|edit|emoji)\\.yml")))] | length')
+          if [ "$busy" = "0" ]; then gh workflow run post.yml; else echo "another Telegram run is queued ($busy)"; fi

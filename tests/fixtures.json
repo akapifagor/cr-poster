@@ -1,0 +1,2732 @@
+{
+ "steam": {
+  "offer": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/5a8d4066-05ff-4f49-92bd-6d9e6bd62047.webp",
+   "budgetCents": 1200000,
+   "categories": [
+    {
+     "id": "entertainment",
+     "name": "Entertainment"
+    }
+   ],
+   "cpmMaxRateCents": 200,
+   "cpmMinRateCents": 0,
+   "createdAt": "2026-11-11T20:48:53.000Z",
+   "description": "Clip the official SEGA Black Friday Sale video. Show the priority games.\nMake it clear the sale is on Steam for a limited time.\nPost to TikTok, Instagram Reels, and YouTube Shorts.\n",
+   "geoPriced": true,
+   "id": "1391fb95-e8a3-4f0b-b146-d0d786e6aee0",
+   "launchDate": "2026-11-16T20:26:53.000Z",
+   "listedAt": "2026-11-16T20:26:53.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 2,
+    "budgetProgressBps": 16,
+    "budgetSpentCents": 1957,
+    "creatorCount": 2,
+    "metricsUpdatedAt": "2026-11-19T07:54:18.000Z",
+    "paidOutCents": 0,
+    "totalViews": 12159
+   },
+   "name": "SEGA - Steam Black Friday Sale Clipping",
+   "organizationExperienceId": "exp_zeADOv9rOOKk2x",
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "organizationLogoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+   "organizationName": "Clipping Culture",
+   "organizationProfileHandle": "clipping-culture",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 150,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 0
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "youtube"
+   ],
+   "primaryPayoutCents": 200,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:19.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  },
+  "detail": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/5a8d4066-05ff-4f49-92bd-6d9e6bd62047.webp",
+   "createdAt": "2026-11-11T20:48:41.000Z",
+   "description": "Clip the official SEGA Black Friday Sale video. Show the priority games.\nMake it clear the sale is on Steam for a limited time.\nPost to TikTok, Instagram Reels, and YouTube Shorts.\n",
+   "feeSchedule": "standard",
+   "id": "1391fb95-e8a3-4f0b-b146-d0d786e6aee0",
+   "launchDate": "2026-11-16T20:26:53.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 2,
+    "budgetProgressBps": 16,
+    "budgetSpentCents": 1959,
+    "creatorCount": 2,
+    "paidOutCents": 0,
+    "totalViews": 12159
+   },
+   "name": "SEGA - Steam Black Friday Sale Clipping",
+   "organization": {
+    "logoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+    "name": "Clipping Culture",
+    "profileHandle": "clipping-culture",
+    "verified": true
+   },
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-16T20:26:52.656Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-16T20:26:52.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "entertainment",
+       "name": "Entertainment"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 1200000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 200
+      },
+      {
+       "platform": "youtube",
+       "rate": 200
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "tiktok",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "youtube",
+       "rate": 0
+      }
+     ]
+    },
+    "payoutModel": [
+     {
+      "maxPayout": 80000,
+      "minPayout": 200,
+      "platform": "tiktok",
+      "rate": 0
+     },
+     {
+      "maxPayout": 80000,
+      "minPayout": 150,
+      "platform": "instagram",
+      "rate": 150
+     },
+     {
+      "maxPayout": 80000,
+      "minPayout": 200,
+      "platform": "youtube",
+      "rate": 0
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  }
+ },
+ "stranger": {
+  "offer": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/ab02e496-c7d9-435d-a7c7-058114834bae.webp",
+   "budgetCents": 2400000,
+   "categories": [
+    {
+     "id": "entertainment",
+     "name": "Entertainment"
+    }
+   ],
+   "cpmMaxRateCents": 200,
+   "cpmMinRateCents": 0,
+   "createdAt": "2026-11-11T20:42:49.000Z",
+   "description": "Post clips of the STRANGER THAN HEAVEN Act 2 Story Trailer.\nPost on TikTok, Instagram, or YouTube Shorts.\n",
+   "geoPriced": true,
+   "id": "65724060-69de-4dc7-a523-4843b7358871",
+   "launchDate": "2026-11-13T18:44:45.000Z",
+   "listedAt": "2026-11-13T18:44:45.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 975,
+    "budgetProgressBps": 2882,
+    "budgetSpentCents": 691880,
+    "creatorCount": 159,
+    "metricsUpdatedAt": "2026-11-19T07:54:18.000Z",
+    "paidOutCents": 0,
+    "totalViews": 5034362
+   },
+   "name": "SEGA - STRANGER THAN HEAVEN Act 2 Trailer Clipping",
+   "organizationExperienceId": "exp_zeADOv9rOOKk2x",
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "organizationLogoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+   "organizationName": "Clipping Culture",
+   "organizationProfileHandle": "clipping-culture",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 80000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 0
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "youtube"
+   ],
+   "primaryPayoutCents": 200,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:20.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 2
+   }
+  },
+  "detail": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/ab02e496-c7d9-435d-a7c7-058114834bae.webp",
+   "createdAt": "2026-11-11T20:42:39.000Z",
+   "description": "Post clips of the STRANGER THAN HEAVEN Act 2 Story Trailer.\nPost on TikTok, Instagram, or YouTube Shorts.\n",
+   "feeSchedule": "standard",
+   "id": "65724060-69de-4dc7-a523-4843b7358871",
+   "launchDate": "2026-11-13T18:44:45.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 975,
+    "budgetProgressBps": 2884,
+    "budgetSpentCents": 692097,
+    "creatorCount": 159,
+    "paidOutCents": 0,
+    "totalViews": 5035783
+   },
+   "name": "SEGA - STRANGER THAN HEAVEN Act 2 Trailer Clipping",
+   "organization": {
+    "logoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+    "name": "Clipping Culture",
+    "profileHandle": "clipping-culture",
+    "verified": true
+   },
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-13T18:44:44.826Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-13T18:44:44.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "entertainment",
+       "name": "Entertainment"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 2400000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 200
+      },
+      {
+       "platform": "instagram",
+       "rate": 200
+      },
+      {
+       "platform": "youtube",
+       "rate": 200
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "tiktok",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "instagram",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "youtube",
+       "rate": 0
+      }
+     ]
+    },
+    "payoutModel": [
+     {
+      "maxPayout": 80000,
+      "minPayout": 200,
+      "platform": "tiktok",
+      "rate": 0
+     },
+     {
+      "maxPayout": 80000,
+      "minPayout": 200,
+      "platform": "instagram",
+      "rate": 0
+     },
+     {
+      "maxPayout": 80000,
+      "minPayout": 200,
+      "platform": "youtube",
+      "rate": 0
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 1,
+    "creatorRequirements": 0,
+    "references": 2
+   }
+  }
+ },
+ "spanish": {
+  "offer": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/0b124239-e8cc-46ab-86cb-dd5add8e04c7.webp",
+   "budgetCents": 500000,
+   "categories": [
+    {
+     "id": "entertainment",
+     "name": "Entertainment"
+    }
+   ],
+   "cpmMaxRateCents": 200,
+   "cpmMinRateCents": 0,
+   "createdAt": "2026-11-17T14:55:55.000Z",
+   "description": "Clip moments from the Football Manager 27 influencer videos in the content list.\nPost to TikTok, Instagram Reels, and YouTube Shorts.\n",
+   "geoPriced": true,
+   "id": "affff4f9-30b5-4dea-841f-69ef3f8f9c50",
+   "launchDate": "2026-11-17T19:54:45.000Z",
+   "listedAt": "2026-11-17T19:54:45.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 9,
+    "budgetProgressBps": 770,
+    "budgetSpentCents": 38529,
+    "creatorCount": 3,
+    "metricsUpdatedAt": "2026-11-19T07:54:08.000Z",
+    "paidOutCents": 0,
+    "totalViews": 257362
+   },
+   "name": "SEGA - Football Manager 27 Spanish Influencer Clip",
+   "organizationExperienceId": "exp_zeADOv9rOOKk2x",
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "organizationLogoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+   "organizationName": "Clipping Culture",
+   "organizationProfileHandle": "clipping-culture",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 60000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 60000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 60000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 0
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "youtube"
+   ],
+   "primaryPayoutCents": 200,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:11.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 2
+   }
+  },
+  "detail": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/0b124239-e8cc-46ab-86cb-dd5add8e04c7.webp",
+   "createdAt": "2026-11-17T14:55:49.000Z",
+   "description": "Clip moments from the Football Manager 27 influencer videos in the content list.\nPost to TikTok, Instagram Reels, and YouTube Shorts.\n",
+   "feeSchedule": "standard",
+   "id": "affff4f9-30b5-4dea-841f-69ef3f8f9c50",
+   "launchDate": "2026-11-17T19:54:45.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 9,
+    "budgetProgressBps": 771,
+    "budgetSpentCents": 38529,
+    "creatorCount": 3,
+    "paidOutCents": 0,
+    "totalViews": 257362
+   },
+   "name": "SEGA - Football Manager 27 Spanish Influencer Clip",
+   "organization": {
+    "logoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+    "name": "Clipping Culture",
+    "profileHandle": "clipping-culture",
+    "verified": true
+   },
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-17T19:54:44.687Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-17T19:54:44.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "entertainment",
+       "name": "Entertainment"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 500000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 0
+      },
+      {
+       "platform": "instagram",
+       "rate": 0
+      },
+      {
+       "platform": "youtube",
+       "rate": 0
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "tiktok",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "MX",
+        "AR"
+       ],
+       "label": "spanish",
+       "platform": "tiktok",
+       "rate": 200
+      },
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "instagram",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "MX",
+        "AR"
+       ],
+       "label": "spanish",
+       "platform": "instagram",
+       "rate": 200
+      },
+      {
+       "countries": [
+        "BD",
+        "IN",
+        "PK"
+       ],
+       "label": "Pak, Ind, Ban",
+       "platform": "youtube",
+       "rate": 0
+      },
+      {
+       "countries": [
+        "MX",
+        "AR"
+       ],
+       "label": "spanish",
+       "platform": "youtube",
+       "rate": 200
+      }
+     ]
+    },
+    "payoutModel": [
+     {
+      "maxPayout": 60000,
+      "minPayout": 200,
+      "platform": "tiktok",
+      "rate": 0
+     },
+     {
+      "maxPayout": 60000,
+      "minPayout": 200,
+      "platform": "instagram",
+      "rate": 0
+     },
+     {
+      "maxPayout": 60000,
+      "minPayout": 200,
+      "platform": "youtube",
+      "rate": 0
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 1,
+    "creatorRequirements": 0,
+    "references": 2
+   }
+  }
+ },
+ "talking": {
+  "offer": {
+   "banner": "d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51/campaigns/thumbnails/85237537-154d-46ac-9040-fb4ce2815d05.png",
+   "budgetCents": 500000,
+   "categories": [
+    {
+     "id": "product",
+     "name": "Product"
+    },
+    {
+     "id": "consumer-brand",
+     "name": "Consumer Brand"
+    }
+   ],
+   "cpmMaxRateCents": 300,
+   "cpmMinRateCents": 75,
+   "createdAt": "2026-10-07T20:03:36.000Z",
+   "description": "- Create English talking-head UGC promoting Content Rewards to clippers, video editors, and people interested in earning from video clips.\n- Target Tier-1 audiences: US, UK, Canada, and Australia.\n",
+   "geoPriced": false,
+   "id": "61d2c454-a193-44b7-8ab8-9529db4d6f23",
+   "launchDate": "2026-10-16T13:24:35.000Z",
+   "listedAt": "2026-10-16T13:24:35.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 71,
+    "budgetProgressBps": 3408,
+    "budgetSpentCents": 170404,
+    "creatorCount": 12,
+    "metricsUpdatedAt": "2026-11-19T07:54:12.000Z",
+    "paidOutCents": 0,
+    "totalViews": 1204769
+   },
+   "name": "Talking-Head UGC [English]",
+   "organizationExperienceId": "exp_fspXQWhnF3vH76",
+   "organizationId": "d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51",
+   "organizationLogoUrl": "organizations/d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51/logo/d835b1ea-a20f-4373-b9e7-86d855f04843.webp",
+   "organizationName": "Content Rewards",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 300
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "x",
+     "rateCents": 300
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 75
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 75
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "x",
+    "youtube"
+   ],
+   "primaryPayoutCents": 300,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:15.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 3
+   }
+  },
+  "detail": {
+   "banner": "d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51/campaigns/thumbnails/85237537-154d-46ac-9040-fb4ce2815d05.png",
+   "createdAt": "2026-10-07T20:03:35.000Z",
+   "description": "- Create English talking-head UGC promoting Content Rewards to clippers, video editors, and people interested in earning from video clips.\n- Target Tier-1 audiences: US, UK, Canada, and Australia.\n",
+   "feeSchedule": "standard",
+   "id": "61d2c454-a193-44b7-8ab8-9529db4d6f23",
+   "launchDate": "2026-10-16T13:24:35.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 71,
+    "budgetProgressBps": 3408,
+    "budgetSpentCents": 170404,
+    "creatorCount": 12,
+    "paidOutCents": 0,
+    "totalViews": 1204769
+   },
+   "name": "Talking-Head UGC [English]",
+   "organization": {
+    "logoUrl": "organizations/d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51/logo/d835b1ea-a20f-4373-b9e7-86d855f04843.webp",
+    "name": "Content Rewards",
+    "verified": true
+   },
+   "organizationId": "d3dd7e61-d3ed-5db5-bdee-a4c0d47f8a51",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-10-16T13:24:35.420Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-11T20:04:29.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "product",
+       "name": "Product"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "ugc-with-face",
+       "name": "UGC (With Face)"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "ugc",
+       "name": "UGC Creator"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 500000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 75
+      },
+      {
+       "platform": "youtube",
+       "rate": 75
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "US"
+       ],
+       "label": "united states",
+       "platform": "tiktok",
+       "rate": 250
+      },
+      {
+       "countries": [
+        "GB",
+        "CA",
+        "AU"
+       ],
+       "label": "UK, AUS, CA",
+       "platform": "tiktok",
+       "rate": 200
+      },
+      {
+       "countries": [
+        "FR",
+        "DE",
+        "ES"
+       ],
+       "label": "Europe",
+       "platform": "tiktok",
+       "rate": 150
+      },
+      {
+       "countries": [
+        "US"
+       ],
+       "label": "united states",
+       "platform": "youtube",
+       "rate": 250
+      },
+      {
+       "countries": [
+        "GB",
+        "CA",
+        "AU"
+       ],
+       "label": "UK, AUS, CA",
+       "platform": "youtube",
+       "rate": 200
+      },
+      {
+       "countries": [
+        "FR",
+        "DE",
+        "ES"
+       ],
+       "label": "Europe",
+       "platform": "youtube",
+       "rate": 150
+      }
+     ]
+    },
+    "payoutModel": [
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "instagram",
+      "rate": 300
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "x",
+      "rate": 300
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "tiktok",
+      "rate": 75
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "youtube",
+      "rate": 75
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "move": {
+    "movedAt": "2026-10-07T20:03:36.000Z",
+    "role": "target",
+    "sourceCampaignId": "85237537-154d-46ac-9040-fb4ce2815d05",
+    "sourceName": "Talking-Head UGC [English]",
+    "targetCampaignId": "61d2c454-a193-44b7-8ab8-9529db4d6f23",
+    "targetName": "Talking-Head UGC [English]"
+   },
+   "briefCounts": {
+    "contentRules": 2,
+    "creatorRequirements": 0,
+    "references": 3
+   }
+  }
+ },
+ "jersey": {
+  "offer": {
+   "banner": "f30ae1b6-4d4e-500e-9742-07f43aa53c60/campaigns/thumbnails/20c5c2ef-3194-4e97-844d-b8a1e11c6c7c.webp",
+   "budgetCents": 1400000,
+   "categories": [
+    {
+     "id": "consumer-brand",
+     "name": "Consumer Brand"
+    }
+   ],
+   "cpmMaxRateCents": 250,
+   "cpmMinRateCents": 0,
+   "createdAt": "2026-08-31T21:43:39.000Z",
+   "description": "Jersey Fusion is an online store for cheap football jerseys. We have a proven video template that already works. Your job is to recreate it. Full instructions and examples in the Notion link",
+   "geoPriced": false,
+   "id": "802cf95a-ea84-4070-9a96-8a917831cb16",
+   "launchDate": "2026-11-09T18:50:12.000Z",
+   "listedAt": "2026-11-09T18:50:12.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 1,
+    "metricsUpdatedAt": "2026-11-19T07:54:16.000Z",
+    "paidOutCents": 0,
+    "totalViews": 1973
+   },
+   "name": "Jersey Fusion Clipping [Infinte Budget]",
+   "organizationExperienceId": "exp_iXJEwHJKe6nf7s",
+   "organizationId": "f30ae1b6-4d4e-500e-9742-07f43aa53c60",
+   "organizationLogoUrl": "organizations/f30ae1b6-4d4e-500e-9742-07f43aa53c60/logo/f30ae1b6-4d4e-500e-9742-07f43aa53c60.07ae5d4fb6.jpg",
+   "organizationName": "ClipUp Official",
+   "organizationProfileHandle": "clipup-official",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 250
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 300,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 0
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok"
+   ],
+   "primaryPayoutCents": 250,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:18.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  },
+  "detail": {
+   "banner": "f30ae1b6-4d4e-500e-9742-07f43aa53c60/campaigns/thumbnails/20c5c2ef-3194-4e97-844d-b8a1e11c6c7c.webp",
+   "createdAt": "2026-08-31T21:43:32.000Z",
+   "description": "Jersey Fusion is an online store for cheap football jerseys. We have a proven video template that already works. Your job is to recreate it. Full instructions and examples in the Notion link",
+   "feeSchedule": "standard",
+   "id": "802cf95a-ea84-4070-9a96-8a917831cb16",
+   "launchDate": "2026-11-09T18:50:12.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 1,
+    "paidOutCents": 0,
+    "totalViews": 1973
+   },
+   "name": "Jersey Fusion Clipping [Infinte Budget]",
+   "organization": {
+    "logoUrl": "organizations/f30ae1b6-4d4e-500e-9742-07f43aa53c60/logo/f30ae1b6-4d4e-500e-9742-07f43aa53c60.07ae5d4fb6.jpg",
+    "name": "ClipUp Official",
+    "profileHandle": "clipup-official",
+    "verified": true
+   },
+   "organizationId": "f30ae1b6-4d4e-500e-9742-07f43aa53c60",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-15T14:43:14.656Z",
+   "statusReason": "manual",
+   "updatedAt": "2026-11-15T14:43:14.000Z",
+   "configuration": {
+    "application": {
+     "accountApproval": true,
+     "autoDeclineAfterDeadline": false,
+     "id": "eab13ca8-7ed2-4cd1-ab34-f8e88d9ddbf6",
+     "reviewDeadline": "48h"
+    },
+    "content": {
+     "contentCategories": [
+      {
+       "id": "consumer-brand",
+       "name": "Consumer Brand"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "ugc-faceless",
+       "name": "UGC (Faceless)"
+      },
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      },
+      {
+       "id": "slideshows",
+       "name": "Slideshows"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "ugc",
+       "name": "UGC Creator"
+      },
+      {
+       "id": "editor",
+       "name": "Video Editor"
+      },
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 1400000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 0
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "CA",
+        "GB",
+        "US",
+        "AE",
+        "AU",
+        "ES",
+        "FR",
+        "DE",
+        "NL",
+        "BE"
+       ],
+       "label": "tier 1 countries",
+       "platform": "tiktok",
+       "rate": 250
+      }
+     ]
+    },
+    "maxSubmissionsPerUser": 400,
+    "payoutModel": [
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "instagram",
+      "rate": 250
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 300,
+      "platform": "tiktok",
+      "rate": 0
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 1,
+    "references": 2
+   }
+  }
+ },
+ "france": {
+  "offer": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/79f2d70c-c818-4954-a439-f7bd3269e2f9.webp",
+   "budgetCents": 800000,
+   "categories": [
+    {
+     "id": "entertainment",
+     "name": "Entertainment"
+    }
+   ],
+   "cpmMaxRateCents": 500,
+   "cpmMinRateCents": 0,
+   "createdAt": "2026-11-02T16:21:05.000Z",
+   "description": "Post clips of World of Warcraft: Forever.\nUse the trailers, gameplay, panels, and video assets in the content folder.\nShow the visuals, the footage highlights, the gameplay, or the world.\nSome files have no spoken language. You can use those too.\nPost on TikTok and YouTube Shorts.\n",
+   "geoPriced": true,
+   "id": "319cc15a-bf2d-477f-bb04-c64a243aa681",
+   "launchDate": "2026-11-03T20:14:38.000Z",
+   "listedAt": "2026-11-03T20:14:38.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 193,
+    "budgetProgressBps": 1244,
+    "budgetSpentCents": 99541,
+    "creatorCount": 40,
+    "metricsUpdatedAt": "2026-11-19T07:54:16.000Z",
+    "paidOutCents": 0,
+    "totalViews": 425909
+   },
+   "name": "[FRANCE] Blizzard - World of Warcraft Forever",
+   "organizationExperienceId": "exp_zeADOv9rOOKk2x",
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "organizationLogoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+   "organizationName": "Clipping Culture",
+   "organizationProfileHandle": "clipping-culture",
+   "organizationVerified": true,
+   "payouts": [
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 0
+    },
+    {
+     "maxPayoutCents": 50000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 0
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "youtube"
+   ],
+   "primaryPayoutCents": 500,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:18.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  },
+  "detail": {
+   "banner": "a581a2a2-b79c-5f3c-b374-bab179ed49dc/campaigns/thumbnails/79f2d70c-c818-4954-a439-f7bd3269e2f9.webp",
+   "createdAt": "2026-11-02T16:20:54.000Z",
+   "description": "Post clips of World of Warcraft: Forever.\nUse the trailers, gameplay, panels, and video assets in the content folder.\nShow the visuals, the footage highlights, the gameplay, or the world.\nSome files have no spoken language. You can use those too.\nPost on TikTok and YouTube Shorts.\n",
+   "feeSchedule": "standard",
+   "id": "319cc15a-bf2d-477f-bb04-c64a243aa681",
+   "launchDate": "2026-11-03T20:14:38.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 193,
+    "budgetProgressBps": 1244,
+    "budgetSpentCents": 99547,
+    "creatorCount": 40,
+    "paidOutCents": 0,
+    "totalViews": 425917
+   },
+   "name": "[FRANCE] Blizzard - World of Warcraft Forever",
+   "organization": {
+    "logoUrl": "organizations/a581a2a2-b79c-5f3c-b374-bab179ed49dc/logo/a581a2a2-b79c-5f3c-b374-bab179ed49dc.1e1267ba82.jpg",
+    "name": "Clipping Culture",
+    "profileHandle": "clipping-culture",
+    "verified": true
+   },
+   "organizationId": "a581a2a2-b79c-5f3c-b374-bab179ed49dc",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-03T20:14:38.472Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-04T15:18:44.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "entertainment",
+       "name": "Entertainment"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 800000,
+    "geoRates": {
+     "restOfWorld": [
+      {
+       "platform": "tiktok",
+       "rate": 0
+      },
+      {
+       "platform": "youtube",
+       "rate": 0
+      },
+      {
+       "platform": "instagram",
+       "rate": 0
+      }
+     ],
+     "tiers": [
+      {
+       "countries": [
+        "FR"
+       ],
+       "label": "France",
+       "platform": "tiktok",
+       "rate": 500
+      },
+      {
+       "countries": [
+        "FR"
+       ],
+       "label": "France",
+       "platform": "youtube",
+       "rate": 500
+      },
+      {
+       "countries": [
+        "FR"
+       ],
+       "label": "France",
+       "platform": "instagram",
+       "rate": 300
+      }
+     ]
+    },
+    "payoutModel": [
+     {
+      "maxPayout": 50000,
+      "minPayout": 100,
+      "platform": "tiktok",
+      "rate": 0
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 100,
+      "platform": "youtube",
+      "rate": 0
+     },
+     {
+      "maxPayout": 50000,
+      "minPayout": 100,
+      "platform": "instagram",
+      "rate": 0
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  }
+ },
+ "pool": {
+  "offer": {
+   "banner": "5960ea84-7539-47a9-b2f5-c37ba9885fa4/campaigns/thumbnails/f8fe9f7b-c037-41fb-bfe7-567a5a18983a.webp",
+   "budgetCents": 1000000,
+   "categories": [
+    {
+     "id": "streamer",
+     "name": "Streamer"
+    },
+    {
+     "id": "personal-brand",
+     "name": "Personal Brand"
+    }
+   ],
+   "createdAt": "2026-11-18T14:44:13.000Z",
+   "description": "Clip Kai Cenat’s GTA 6 streams and get paid for your views. Post on TikTok, YouTube Shorts, Instagram Reels & X. The more views, the more you earn.\nRULES HERE:",
+   "geoPriced": false,
+   "id": "1d2bcb00-c904-415f-aa82-f95b96baad86",
+   "launchDate": "2026-11-18T19:58:55.000Z",
+   "listedAt": "2026-11-18T19:58:55.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 108,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 66,
+    "metricsUpdatedAt": "2026-11-19T07:54:20.000Z",
+    "paidOutCents": 0,
+    "poolSplit": {
+     "creatorCount": 191,
+     "otherShareBps": 0,
+     "topShareBps": [],
+     "final": false
+    },
+    "totalViews": 883212
+   },
+   "name": "Kai Cenat - $10,000 GTA 6 Pool Campaign",
+   "organizationId": "5960ea84-7539-47a9-b2f5-c37ba9885fa4",
+   "organizationName": "Clipped & Shipped",
+   "organizationProfileHandle": "kinse-clipping",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "payoutType": "pool",
+     "platform": "tiktok"
+    },
+    {
+     "payoutType": "pool",
+     "platform": "youtube"
+    },
+    {
+     "payoutType": "pool",
+     "platform": "instagram"
+    },
+    {
+     "payoutType": "pool",
+     "platform": "x"
+    }
+   ],
+   "payoutType": "pool",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "x",
+    "youtube"
+   ],
+   "primaryPayoutCents": 0,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:35.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 3
+   }
+  },
+  "detail": {
+   "banner": "5960ea84-7539-47a9-b2f5-c37ba9885fa4/campaigns/thumbnails/f8fe9f7b-c037-41fb-bfe7-567a5a18983a.webp",
+   "createdAt": "2026-11-18T14:44:10.000Z",
+   "description": "Clip Kai Cenat’s GTA 6 streams and get paid for your views. Post on TikTok, YouTube Shorts, Instagram Reels & X. The more views, the more you earn.\nRULES HERE:",
+   "feeSchedule": "standard",
+   "id": "1d2bcb00-c904-415f-aa82-f95b96baad86",
+   "launchDate": "2026-11-18T19:58:55.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 108,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 66,
+    "paidOutCents": 0,
+    "poolSplit": {
+     "creatorCount": 194,
+     "otherShareBps": 0,
+     "topShareBps": [],
+     "final": false
+    },
+    "totalViews": 883605
+   },
+   "name": "Kai Cenat - $10,000 GTA 6 Pool Campaign",
+   "organization": {
+    "name": "Clipped & Shipped",
+    "profileHandle": "kinse-clipping",
+    "verified": false
+   },
+   "organizationId": "5960ea84-7539-47a9-b2f5-c37ba9885fa4",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-18T19:58:55.134Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-18T20:28:31.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "streamer",
+       "name": "Streamer"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 1000000,
+    "minClipViews": 1000,
+    "minCreatorViews": 750000,
+    "payoutModel": [
+     {
+      "platform": "tiktok"
+     },
+     {
+      "platform": "youtube"
+     },
+     {
+      "platform": "instagram"
+     },
+     {
+      "platform": "x"
+     }
+    ]
+   },
+   "type": "pool",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 3
+   }
+  }
+ },
+ "perpost": {
+  "offer": {
+   "banner": "09fb52f4-a03f-48b9-9481-234000686f7d/campaigns/thumbnails/ce25ef1d-02a5-454e-a750-4f869d6592a7.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "gaming",
+     "name": "Gaming"
+    }
+   ],
+   "createdAt": "2026-11-18T19:07:51.000Z",
+   "description": "We are looking for creative content creators to produce engaging storytelling videos using gameplay footage.\n\nCreators can use games like Minecraft, GTA V, Roblox, or other popular games as the background for entertaining stories, mysteries, adventures, and interesting events.\n\nEach video should fea",
+   "geoPriced": false,
+   "id": "67302e32-f792-4772-a964-b95d2b19f040",
+   "launchDate": "2026-11-18T21:04:53.000Z",
+   "listedAt": "2026-11-18T21:04:53.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 5500,
+    "budgetSpentCents": 55000,
+    "creatorCount": 1,
+    "metricsUpdatedAt": "2026-11-18T23:30:09.000Z",
+    "paidOutCents": 0,
+    "totalViews": 3
+   },
+   "name": "Gaming Storytelling ",
+   "organizationId": "09fb52f4-a03f-48b9-9481-234000686f7d",
+   "organizationName": "AARON RODRIGUEZ TREJO",
+   "organizationProfileHandle": "aaron-rodriguez-trejo",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "amountCents": 43000,
+     "payoutType": "perPost",
+     "platform": "youtube"
+    }
+   ],
+   "payoutType": "perPost",
+   "platforms": [
+    "youtube"
+   ],
+   "primaryPayoutCents": 43000,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": true,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:28:48.000Z",
+   "lockedReferences": 2
+  },
+  "detail": {
+   "banner": "09fb52f4-a03f-48b9-9481-234000686f7d/campaigns/thumbnails/ce25ef1d-02a5-454e-a750-4f869d6592a7.webp",
+   "createdAt": "2026-11-18T19:07:48.000Z",
+   "description": "We are looking for creative content creators to produce engaging storytelling videos using gameplay footage.\n\nCreators can use games like Minecraft, GTA V, Roblox, or other popular games as the background for entertaining stories, mysteries, adventures, and interesting events.\n\nEach video should fea",
+   "feeSchedule": "standard",
+   "id": "67302e32-f792-4772-a964-b95d2b19f040",
+   "launchDate": "2026-11-18T21:04:53.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 5500,
+    "budgetSpentCents": 55000,
+    "creatorCount": 1,
+    "paidOutCents": 0,
+    "totalViews": 3
+   },
+   "name": "Gaming Storytelling ",
+   "organization": {
+    "name": "AARON RODRIGUEZ TREJO",
+    "profileHandle": "aaron-rodriguez-trejo",
+    "verified": false
+   },
+   "organizationId": "09fb52f4-a03f-48b9-9481-234000686f7d",
+   "private": false,
+   "requiresApplication": true,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-18T22:20:50.941Z",
+   "statusReason": "manual",
+   "updatedAt": "2026-11-18T22:20:50.000Z",
+   "configuration": {
+    "application": {
+     "accountApproval": true,
+     "autoDeclineAfterDeadline": false,
+     "id": "b5030f98-1c32-4ae9-8341-5751bb84d556",
+     "reviewDeadline": "48h"
+    },
+    "content": {
+     "contentCategories": [
+      {
+       "id": "gaming",
+       "name": "Gaming"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "youtube-long-form",
+       "name": "YouTube Long-Form"
+      }
+     ],
+     "guidelines": "We are looking for talented gaming content creators who specialize in storytelling, gaming entertainment, creative narration, and video editing.\n\nIdeal creators should have:\n- Experience creating gaming videos.\n- Strong storytelling and narration skills.\n- Good video editing skills.\n- An understanding of YouTube Shorts, TikTok, and Instagram Reels.\n- Creativity and the ability to keep viewers engaged.\n\nWe welcome both small and large creators. Quality and creativity matter more than follower count."
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "influencer",
+       "name": "Influencer"
+      },
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      },
+      {
+       "id": "ugc",
+       "name": "UGC Creator"
+      },
+      {
+       "id": "editor",
+       "name": "Video Editor"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "brandLogo": false,
+     "draftCaptionRequired": false,
+     "faceOnCamera": false,
+     "linkInBio": false,
+     "preApproval": true
+    },
+    "rules": {
+     "audio": {
+      "clearSpeech": false
+     },
+     "branding": {
+      "logoRequired": false
+     },
+     "content": {
+      "noExplicit": false
+     },
+     "faceOnCamera": false,
+     "sound": {
+      "keepOriginalAudio": false,
+      "mustUseProvided": false
+     },
+     "video": {
+      "wellLit": false
+     }
+    },
+    "budget": 100000,
+    "maxSubmissionsPerUser": 1,
+    "payoutModel": [
+     {
+      "amount": 43000,
+      "platform": "youtube"
+     }
+    ]
+   },
+   "type": "perPost",
+   "organizationPrivate": false,
+   "lockedReferences": 2
+  }
+ },
+ "clickoptions": {
+  "offer": {
+   "banner": "a5d5978a-ec09-4f22-b03c-d178664ccca2/campaigns/thumbnails/321bcb55-93be-4b81-96e0-904f4ce3254e.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "trading",
+     "name": "Trading"
+    },
+    {
+     "id": "finance",
+     "name": "Finance"
+    }
+   ],
+   "cpmMaxRateCents": 150,
+   "cpmMinRateCents": 150,
+   "createdAt": "2026-11-03T10:35:44.000Z",
+   "description": "Create or Cut clips from our videos on Futures without liquidation: leveraged crypto futures with no liquidation price, so a wick can't close the trade. Add your own hook and voice-over in your audience's language (Hindi, Vietnamese, Turkish, Indonesian, Portuguese, Spanish).",
+   "geoPriced": false,
+   "id": "a549466e-f4b1-4b1e-b618-c605c6f943cb",
+   "launchDate": "2026-11-05T11:24:13.000Z",
+   "listedAt": "2026-11-05T11:24:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 89,
+    "budgetSpentCents": 893,
+    "creatorCount": 1,
+    "metricsUpdatedAt": "2026-11-19T07:48:10.000Z",
+    "paidOutCents": 0,
+    "totalViews": 5426
+   },
+   "name": "Clip futures videos · $1.50/1K · ClickOptions",
+   "organizationId": "a5d5978a-ec09-4f22-b03c-d178664ccca2",
+   "organizationName": "ClickOptions",
+   "organizationProfileHandle": "clickoptions",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 10000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 10000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 10000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 10000,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "x",
+     "rateCents": 150
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "x",
+    "youtube"
+   ],
+   "primaryPayoutCents": 150,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": true,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:48:12.000Z",
+   "lockedReferences": 11
+  },
+  "detail": {
+   "banner": "a5d5978a-ec09-4f22-b03c-d178664ccca2/campaigns/thumbnails/321bcb55-93be-4b81-96e0-904f4ce3254e.webp",
+   "createdAt": "2026-11-03T10:35:34.000Z",
+   "description": "Create or Cut clips from our videos on Futures without liquidation: leveraged crypto futures with no liquidation price, so a wick can't close the trade. Add your own hook and voice-over in your audience's language (Hindi, Vietnamese, Turkish, Indonesian, Portuguese, Spanish).",
+   "feeSchedule": "standard",
+   "id": "a549466e-f4b1-4b1e-b618-c605c6f943cb",
+   "launchDate": "2026-11-05T11:24:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 1,
+    "budgetProgressBps": 89,
+    "budgetSpentCents": 893,
+    "creatorCount": 1,
+    "paidOutCents": 0,
+    "totalViews": 5426
+   },
+   "name": "Clip futures videos · $1.50/1K · ClickOptions",
+   "organization": {
+    "name": "ClickOptions",
+    "profileHandle": "clickoptions",
+    "verified": false
+   },
+   "organizationId": "a5d5978a-ec09-4f22-b03c-d178664ccca2",
+   "private": false,
+   "requiresApplication": true,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-05T11:24:12.735Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-10T15:31:30.000Z",
+   "configuration": {
+    "application": {
+     "accountApproval": true,
+     "autoDeclineAfterDeadline": false,
+     "id": "a7720b45-b110-4e88-8e70-f2415bef30c6",
+     "reviewDeadline": "48h"
+    },
+    "content": {
+     "contentCategories": [
+      {
+       "id": "trading",
+       "name": "Trading"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ],
+     "guidelines": "Cut 15-60 second clips from the reference videos and cards. Your own voice-over or captions are welcome.\nSay the product name exactly: \"Futures without liquidation\" (leveraged crypto futures with no liquidation price, so a wick can't close the trade).\nHook idea: show the red liquidation line on a normal perp, then the same trade without it.\nPut the campaign link in your bio (or your own ClickOptions referral link if you have one: you then also earn commission on the traders you bring).\nPost in your audience's language.  English, Hindi, Vietnamese, Turkish, Indonesian, Portuguese, Spanish. Chinese. and others)  \n\"Guaranteed\" may only be used about the absence of liquidation (\"no liquidation, guaranteed\"). Never use it about profits, returns or results, and never put it next to a profit number.\nNever say \"risk-free\", \"can't lose\" or \"you only lose what you put in\". Positions can still lose money.\nNo profit promises. Show test results (like the 801-trade study) only with their label: past results from a backtest, not a forecast.\nDon't change the numbers in our videos or present dated comparisons as today's prices.\nNo tokens, airdrops or giveaways.\nDo not name any market maker or partner company.\nNo casino, gambling or memecoin pages.\nBotted or bought views mean rejection and a permanent ban."
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      },
+      {
+       "id": "influencer",
+       "name": "Influencer"
+      }
+     ],
+     "description": "<p>Crypto and trading pages with real, engaged audiences: traders and educators posting in Hindi, Vietnamese, Turkish, Indonesian, Portuguese or Spanish. No casino, gambling, memecoin-shill or repost-farm accounts.</p>"
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "brandLogo": false,
+     "draftCaptionRequired": false,
+     "faceOnCamera": false,
+     "linkInBio": true,
+     "linkInBioUrl": "https://app.clickoptions.ai/sign-up?utm_source=cr&utm_medium=clip",
+     "preApproval": true
+    },
+    "rules": {
+     "audio": {
+      "clearSpeech": false
+     },
+     "branding": {
+      "logoRequired": false
+     },
+     "content": {
+      "noExplicit": false
+     },
+     "faceOnCamera": false,
+     "sound": {
+      "keepOriginalAudio": false,
+      "mustUseProvided": false
+     },
+     "video": {
+      "wellLit": false
+     }
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 10000,
+      "minPayout": 200,
+      "platform": "tiktok",
+      "rate": 150
+     },
+     {
+      "maxPayout": 10000,
+      "minPayout": 200,
+      "platform": "instagram",
+      "rate": 150
+     },
+     {
+      "maxPayout": 10000,
+      "minPayout": 200,
+      "platform": "youtube",
+      "rate": 150
+     },
+     {
+      "maxPayout": 10000,
+      "minPayout": 200,
+      "platform": "x",
+      "rate": 150
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "lockedReferences": 11
+  }
+ },
+ "directoricy": {
+  "offer": {
+   "banner": "e93bc48a-f97d-4fb7-905b-4c7dfa14d29a/campaigns/thumbnails/4aeb6265-655c-4985-8e0c-c162e02918d7.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "kick",
+     "name": "Kick"
+    },
+    {
+     "id": "personal-brand",
+     "name": "Personal Brand"
+    },
+    {
+     "id": "streamer",
+     "name": "Streamer"
+    }
+   ],
+   "cpmMaxRateCents": 150,
+   "cpmMinRateCents": 100,
+   "createdAt": "2026-10-10T22:03:48.000Z",
+   "description": "Welcome, clippers. Here's your shot to catch DirectorIcy in full unhinged mode. Just Chatting and Chat Roulette chaos, clip-worthy PR disaster moments and scuffed gaming clips. Keep it tight, keep it real. Get your clips seen and get rewarded. *CLIPS: https://kickbot.com/clips/DirectorICY*",
+   "geoPriced": false,
+   "id": "e584aad2-21c0-4521-9e55-de4397d51d7c",
+   "launchDate": "2026-10-10T22:06:17.000Z",
+   "listedAt": "2026-10-10T22:06:17.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 7,
+    "budgetProgressBps": 715,
+    "budgetSpentCents": 7156,
+    "creatorCount": 3,
+    "metricsUpdatedAt": "2026-11-19T07:54:09.000Z",
+    "paidOutCents": 0,
+    "totalViews": 54816
+   },
+   "name": "DirectorICY CLIPPING CAMPAIGN",
+   "organizationId": "e93bc48a-f97d-4fb7-905b-4c7dfa14d29a",
+   "organizationName": "DirectorICY",
+   "organizationProfileHandle": "directoricy",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 20000,
+     "minPayoutCents": 500,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 20000,
+     "minPayoutCents": 500,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 20000,
+     "minPayoutCents": 500,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 100
+    },
+    {
+     "maxPayoutCents": 20000,
+     "minPayoutCents": 500,
+     "payoutType": "cpm",
+     "platform": "x",
+     "rateCents": 100
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "tiktok",
+    "x",
+    "youtube"
+   ],
+   "primaryPayoutCents": 150,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:12.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 5
+   }
+  },
+  "detail": {
+   "banner": "e93bc48a-f97d-4fb7-905b-4c7dfa14d29a/campaigns/thumbnails/4aeb6265-655c-4985-8e0c-c162e02918d7.webp",
+   "createdAt": "2026-10-10T22:03:43.000Z",
+   "description": "Welcome, clippers. Here's your shot to catch DirectorIcy in full unhinged mode. Just Chatting and Chat Roulette chaos, clip-worthy PR disaster moments and scuffed gaming clips. Keep it tight, keep it real. Get your clips seen and get rewarded. *CLIPS: https://kickbot.com/clips/DirectorICY*",
+   "feeSchedule": "standard",
+   "id": "e584aad2-21c0-4521-9e55-de4397d51d7c",
+   "launchDate": "2026-10-10T22:06:17.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 7,
+    "budgetProgressBps": 716,
+    "budgetSpentCents": 7156,
+    "creatorCount": 3,
+    "paidOutCents": 0,
+    "totalViews": 54816
+   },
+   "name": "DirectorICY CLIPPING CAMPAIGN",
+   "organization": {
+    "name": "DirectorICY",
+    "profileHandle": "directoricy",
+    "verified": false
+   },
+   "organizationId": "e93bc48a-f97d-4fb7-905b-4c7dfa14d29a",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-10-10T22:06:17.333Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-10-11T22:32:32.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "kick",
+       "name": "Kick"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      },
+      {
+       "id": "editor",
+       "name": "Video Editor"
+      },
+      {
+       "id": "influencer",
+       "name": "Influencer"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 20000,
+      "minPayout": 500,
+      "platform": "tiktok",
+      "rate": 150
+     },
+     {
+      "maxPayout": 20000,
+      "minPayout": 500,
+      "platform": "instagram",
+      "rate": 150
+     },
+     {
+      "maxPayout": 20000,
+      "minPayout": 500,
+      "platform": "youtube",
+      "rate": 100
+     },
+     {
+      "maxPayout": 20000,
+      "minPayout": 500,
+      "platform": "x",
+      "rate": 100
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 5,
+    "references": 5
+   }
+  }
+ },
+ "gavin": {
+  "offer": {
+   "banner": "21ff8e0a-15ff-462e-81d7-c5992589ce80/campaigns/thumbnails/4429da33-6b50-450e-854d-ddc21b4d62a2.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "entertainment",
+     "name": "Entertainment"
+    }
+   ],
+   "cpmMaxRateCents": 100,
+   "cpmMinRateCents": 100,
+   "createdAt": "2026-11-18T17:11:34.000Z",
+   "description": "Repost Gavin Gambles' top slot shorts: jackpots, bonus rounds and big live reactions that already pulled 600K+ views. Light edits are welcome, like a new hook, captions, or a different crop. Real casino footage only. Tag @gavin.gambles in every post.",
+   "geoPriced": false,
+   "id": "28e95189-4b8d-4ef7-9329-14b45dc3dc2d",
+   "launchDate": "2026-11-18T17:12:32.000Z",
+   "listedAt": "2026-11-18T17:12:32.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 4,
+    "budgetProgressBps": 93,
+    "budgetSpentCents": 931,
+    "creatorCount": 4,
+    "metricsUpdatedAt": "2026-11-19T07:48:08.000Z",
+    "paidOutCents": 0,
+    "totalViews": 12582
+   },
+   "name": "Gavin Gambles Slots Reposting",
+   "organizationId": "21ff8e0a-15ff-462e-81d7-c5992589ce80",
+   "organizationName": "Gavin Gambles",
+   "organizationProfileHandle": "gavin-gambles",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 7500,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 100
+    },
+    {
+     "maxPayoutCents": 7500,
+     "minPayoutCents": 200,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 100
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram",
+    "youtube"
+   ],
+   "primaryPayoutCents": 100,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:48:12.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 6
+   }
+  },
+  "detail": {
+   "banner": "21ff8e0a-15ff-462e-81d7-c5992589ce80/campaigns/thumbnails/4429da33-6b50-450e-854d-ddc21b4d62a2.webp",
+   "createdAt": "2026-11-18T17:11:27.000Z",
+   "description": "Repost Gavin Gambles' top slot shorts: jackpots, bonus rounds and big live reactions that already pulled 600K+ views. Light edits are welcome, like a new hook, captions, or a different crop. Real casino footage only. Tag @gavin.gambles in every post.",
+   "feeSchedule": "standard",
+   "id": "28e95189-4b8d-4ef7-9329-14b45dc3dc2d",
+   "launchDate": "2026-11-18T17:12:32.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 4,
+    "budgetProgressBps": 93,
+    "budgetSpentCents": 931,
+    "creatorCount": 4,
+    "paidOutCents": 0,
+    "totalViews": 12582
+   },
+   "name": "Gavin Gambles Slots Reposting",
+   "organization": {
+    "name": "Gavin Gambles",
+    "profileHandle": "gavin-gambles",
+    "verified": false
+   },
+   "organizationId": "21ff8e0a-15ff-462e-81d7-c5992589ce80",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-18T17:12:32.083Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-18T17:12:32.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "entertainment",
+       "name": "Entertainment"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "reposting",
+       "name": "Reposting"
+      },
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      },
+      {
+       "id": "editor",
+       "name": "Video Editor"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 7500,
+      "minPayout": 200,
+      "platform": "instagram",
+      "rate": 100
+     },
+     {
+      "maxPayout": 7500,
+      "minPayout": 200,
+      "platform": "youtube",
+      "rate": 100
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 5,
+    "references": 6
+   }
+  }
+ },
+ "bitline": {
+  "offer": {
+   "banner": "372dba6b-0b3f-47c9-81b3-821ce0facc43/campaigns/thumbnails/62c96143-68ab-4642-91bc-69a898307c8c.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "finance",
+     "name": "Finance"
+    }
+   ],
+   "cpmMaxRateCents": 100,
+   "cpmMinRateCents": 100,
+   "createdAt": "2026-11-06T09:16:37.000Z",
+   "description": "Turn crypto into casino chips in Vegas",
+   "geoPriced": false,
+   "id": "5bb0e4c0-fc8e-4aa9-8bb5-4a8cd7b6c54a",
+   "launchDate": "2026-11-07T14:11:43.000Z",
+   "listedAt": "2026-11-07T14:11:43.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 4,
+    "budgetProgressBps": 2199,
+    "budgetSpentCents": 21995,
+    "creatorCount": 4,
+    "metricsUpdatedAt": "2026-11-19T07:36:08.000Z",
+    "paidOutCents": 0,
+    "totalViews": 352395
+   },
+   "name": "Crypto in Vegas with Bitline",
+   "organizationId": "372dba6b-0b3f-47c9-81b3-821ce0facc43",
+   "organizationName": "Bitline",
+   "organizationProfileHandle": "bitline",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 20000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 100
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "instagram"
+   ],
+   "primaryPayoutCents": 100,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:36:12.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 3
+   }
+  },
+  "detail": {
+   "banner": "372dba6b-0b3f-47c9-81b3-821ce0facc43/campaigns/thumbnails/62c96143-68ab-4642-91bc-69a898307c8c.webp",
+   "createdAt": "2026-11-06T09:16:30.000Z",
+   "description": "Turn crypto into casino chips in Vegas",
+   "feeSchedule": "standard",
+   "id": "5bb0e4c0-fc8e-4aa9-8bb5-4a8cd7b6c54a",
+   "launchDate": "2026-11-07T14:11:43.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 4,
+    "budgetProgressBps": 2200,
+    "budgetSpentCents": 21995,
+    "creatorCount": 4,
+    "paidOutCents": 0,
+    "totalViews": 352395
+   },
+   "name": "Crypto in Vegas with Bitline",
+   "organization": {
+    "name": "Bitline",
+    "profileHandle": "bitline",
+    "verified": false
+   },
+   "organizationId": "372dba6b-0b3f-47c9-81b3-821ce0facc43",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-07T14:11:42.714Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-10T15:02:05.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "finance",
+       "name": "Finance"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": true
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 20000,
+      "minPayout": 100,
+      "platform": "instagram",
+      "rate": 100
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 1,
+    "creatorRequirements": 1,
+    "references": 3
+   }
+  }
+ },
+ "ruckus": {
+  "offer": {
+   "banner": "e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c/campaigns/thumbnails/7fc7f9c5-8636-485e-84c0-2b51af765c21.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "gaming",
+     "name": "Gaming"
+    }
+   ],
+   "cpmMaxRateCents": 200,
+   "cpmMinRateCents": 200,
+   "createdAt": "2026-11-17T17:18:43.000Z",
+   "description": "Clip Dom's funny and entertaining GTA 6 moments for TikTok and YouTube Shorts. GTA 6-specific accounts required; streamer-clips accounts recommended. Scheduled for Nov 18, 2026. Read the full brief before posting; submissions begin only when the campaign opens.",
+   "geoPriced": false,
+   "id": "051002dd-5c46-43d0-a446-43f2957ba3a9",
+   "launchDate": "2026-11-17T20:09:13.000Z",
+   "listedAt": "2026-11-17T20:09:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 0,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 0,
+    "metricsUpdatedAt": "2026-11-19T07:54:18.000Z",
+    "paidOutCents": 0,
+    "totalViews": 0
+   },
+   "name": "Dasgasd3m x RUCKUS | GTA 6",
+   "organizationExperienceId": "exp_TDe1k6GyH2XhXR",
+   "organizationId": "e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c",
+   "organizationLogoUrl": "organizations/e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c/logo/b26457e0-9c51-4cc8-99b8-64bcf8109997.webp",
+   "organizationName": "Ruckus",
+   "organizationProfileHandle": "ruckus-clipping",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 15000,
+     "minPayoutCents": 1000,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 200
+    },
+    {
+     "maxPayoutCents": 15000,
+     "minPayoutCents": 1000,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 200
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "tiktok",
+    "youtube"
+   ],
+   "primaryPayoutCents": 200,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:21.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  },
+  "detail": {
+   "banner": "e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c/campaigns/thumbnails/7fc7f9c5-8636-485e-84c0-2b51af765c21.webp",
+   "createdAt": "2026-11-17T17:18:33.000Z",
+   "description": "Clip Dom's funny and entertaining GTA 6 moments for TikTok and YouTube Shorts. GTA 6-specific accounts required; streamer-clips accounts recommended. Scheduled for Nov 18, 2026. Read the full brief before posting; submissions begin only when the campaign opens.",
+   "feeSchedule": "standard",
+   "id": "051002dd-5c46-43d0-a446-43f2957ba3a9",
+   "launchDate": "2026-11-17T20:09:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 0,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 0,
+    "paidOutCents": 0,
+    "totalViews": 0
+   },
+   "name": "Dasgasd3m x RUCKUS | GTA 6",
+   "organization": {
+    "logoUrl": "organizations/e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c/logo/b26457e0-9c51-4cc8-99b8-64bcf8109997.webp",
+    "name": "Ruckus",
+    "profileHandle": "ruckus-clipping",
+    "verified": false
+   },
+   "organizationId": "e7ef5e1f-e1ac-47e0-b3a3-785b6e21d96c",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": true,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-17T20:09:12.852Z",
+   "statusReason": "manual",
+   "updatedAt": "2026-11-18T16:01:52.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "gaming",
+       "name": "Gaming"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "clipping",
+       "name": "Clipping"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "clipper",
+       "name": "Clipper"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 15000,
+      "minPayout": 1000,
+      "platform": "tiktok",
+      "rate": 200
+     },
+     {
+      "maxPayout": 15000,
+      "minPayout": 1000,
+      "platform": "youtube",
+      "rate": 200
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 1,
+    "references": 1
+   }
+  }
+ },
+ "bigmin": {
+  "offer": {
+   "banner": "bd02366d-eccc-5203-b27b-16ce798d06e2/campaigns/thumbnails/072c8cc4-c660-4620-814b-4ec832c7c654.webp",
+   "budgetCents": 100000,
+   "categories": [
+    {
+     "id": "gaming",
+     "name": "Gaming"
+    }
+   ],
+   "cpmMaxRateCents": 150,
+   "cpmMinRateCents": 15,
+   "createdAt": "2026-11-19T06:20:40.000Z",
+   "description": "Get paid to promote this song posting GTA content! Use the official audio beginning at exactly 2:34 of the song.",
+   "geoPriced": false,
+   "id": "2e5951c8-a46b-404a-b88b-79fbac7ce6e4",
+   "launchDate": "2026-11-19T06:25:13.000Z",
+   "listedAt": "2026-11-19T06:25:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 0,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 0,
+    "metricsUpdatedAt": "2026-11-19T07:54:14.000Z",
+    "paidOutCents": 0,
+    "totalViews": 0
+   },
+   "name": "Things I Could've Said | Audio Only Campaign",
+   "organizationExperienceId": "exp_fpLeAptYLmerl7",
+   "organizationId": "bd02366d-eccc-5203-b27b-16ce798d06e2",
+   "organizationLogoUrl": "organizations/bd02366d-eccc-5203-b27b-16ce798d06e2/logo/bd02366d-eccc-5203-b27b-16ce798d06e2.e9804b9f9d.png",
+   "organizationName": "Music Promo Clippers",
+   "organizationProfileHandle": "music-promo-clippers",
+   "organizationVerified": false,
+   "payouts": [
+    {
+     "maxPayoutCents": 4000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "tiktok",
+     "rateCents": 20
+    },
+    {
+     "maxPayoutCents": 4000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "instagram",
+     "rateCents": 15
+    },
+    {
+     "maxPayoutCents": 5000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "youtube",
+     "rateCents": 30
+    },
+    {
+     "maxPayoutCents": 5000,
+     "minPayoutCents": 5000,
+     "payoutType": "cpm",
+     "platform": "x",
+     "rateCents": 150
+    },
+    {
+     "maxPayoutCents": 4000,
+     "minPayoutCents": 100,
+     "payoutType": "cpm",
+     "platform": "facebook",
+     "rateCents": 15
+    }
+   ],
+   "payoutType": "cpm",
+   "platforms": [
+    "facebook",
+    "instagram",
+    "tiktok",
+    "x",
+    "youtube"
+   ],
+   "primaryPayoutCents": 150,
+   "private": false,
+   "referenceMaterials": [],
+   "requiresApplication": false,
+   "retainerSpotsTotal": 0,
+   "status": "active",
+   "updatedAt": "2026-11-19T07:54:15.000Z",
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  },
+  "detail": {
+   "banner": "bd02366d-eccc-5203-b27b-16ce798d06e2/campaigns/thumbnails/072c8cc4-c660-4620-814b-4ec832c7c654.webp",
+   "createdAt": "2026-11-19T06:20:29.000Z",
+   "description": "Get paid to promote this song posting GTA content! Use the official audio beginning at exactly 2:34 of the song.",
+   "feeSchedule": "standard",
+   "id": "2e5951c8-a46b-404a-b88b-79fbac7ce6e4",
+   "launchDate": "2026-11-19T06:25:13.000Z",
+   "metrics": {
+    "approvedSubmissionCount": 0,
+    "budgetProgressBps": 0,
+    "budgetSpentCents": 0,
+    "creatorCount": 0,
+    "paidOutCents": 0,
+    "totalViews": 0
+   },
+   "name": "Things I Could've Said | Audio Only Campaign",
+   "organization": {
+    "logoUrl": "organizations/bd02366d-eccc-5203-b27b-16ce798d06e2/logo/bd02366d-eccc-5203-b27b-16ce798d06e2.e9804b9f9d.png",
+    "name": "Music Promo Clippers",
+    "profileHandle": "music-promo-clippers",
+    "verified": false
+   },
+   "organizationId": "bd02366d-eccc-5203-b27b-16ce798d06e2",
+   "private": false,
+   "requiresApplication": false,
+   "showBeforeLaunch": false,
+   "showOnDiscover": true,
+   "status": "active",
+   "statusChangedAt": "2026-11-19T06:25:13.395Z",
+   "statusReason": "funded",
+   "updatedAt": "2026-11-19T06:25:13.000Z",
+   "configuration": {
+    "content": {
+     "contentCategories": [
+      {
+       "id": "gaming",
+       "name": "Gaming"
+      }
+     ],
+     "contentTypes": [
+      {
+       "id": "sound",
+       "name": "Sound"
+      }
+     ]
+    },
+    "creator": {
+     "creatorTypes": [
+      {
+       "id": "ugc",
+       "name": "UGC Creator"
+      },
+      {
+       "id": "editor",
+       "name": "Video Editor"
+      }
+     ]
+    },
+    "display": {
+     "hiddenCreatorSubmissions": true,
+     "topPerformers": true
+    },
+    "requirement": {
+     "preApproval": false
+    },
+    "budget": 100000,
+    "payoutModel": [
+     {
+      "maxPayout": 4000,
+      "minPayout": 100,
+      "platform": "tiktok",
+      "rate": 20
+     },
+     {
+      "maxPayout": 4000,
+      "minPayout": 100,
+      "platform": "instagram",
+      "rate": 15
+     },
+     {
+      "maxPayout": 5000,
+      "minPayout": 100,
+      "platform": "youtube",
+      "rate": 30
+     },
+     {
+      "maxPayout": 5000,
+      "minPayout": 5000,
+      "platform": "x",
+      "rate": 150
+     },
+     {
+      "maxPayout": 4000,
+      "minPayout": 100,
+      "platform": "facebook",
+      "rate": 15
+     }
+    ]
+   },
+   "type": "cpm",
+   "organizationPrivate": false,
+   "briefCounts": {
+    "contentRules": 0,
+    "creatorRequirements": 0,
+    "references": 1
+   }
+  }
+ }
+}

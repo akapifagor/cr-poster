@@ -4,14 +4,16 @@ on:
     inputs:
       n: {description: "How many latest channel messages to check", default: "100"}
       below: {description: "Only messages with id below this (0 = all)", default: "0"}
-concurrency: {group: poster}
+permissions: {contents: read, actions: write}
+concurrency: {group: poster, cancel-in-progress: false}  # the poster hands the Telegram session over and is restarted below
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
+        with: {python-version: "3.12", cache: pip}
       - run: pip install -r requirements.txt
       - run: python edit.py ${{ inputs.n }} ${{ inputs.below }}
         env:
@@ -19,3 +21,9 @@ jobs:
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
           TG_SESSION: ${{ secrets.TG_SESSION }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Restart the poster
+        if: always()
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          busy=$(gh api "repos/${{ github.repository }}/actions/runs?per_page=50" --jq '[.workflow_runs[] | select(.status != "completed" and .id != ${{ github.run_id }} and (.path | test("/(post|edit|emoji)\\.yml")))] | length')
+          if [ "$busy" = "0" ]; then gh workflow run post.yml; else echo "another Telegram run is queued ($busy)"; fi

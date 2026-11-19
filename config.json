@@ -14,7 +14,7 @@
     "chrome": "5296630734025400195"
   },
   "first_run_post": 3,
-  "max_per_run": 5,
+  "max_per_run": 10,
   "signature": {
     "prefix": "By",
     "text": "A.k.a Pifagor",
@@ -23,5 +23,8 @@
   "ai_model": "gemini-3.5-flash-lite",
   "ai_fallback_model": "gemini-3.5-flash",
   "max_age_hours": 48,
-  "spread_minutes": 25
+  "max_spent_pct": 80,
+  "poll_seconds": 60,
+  "loop_minutes": 330,
+  "post_gap_minutes": 3
 }

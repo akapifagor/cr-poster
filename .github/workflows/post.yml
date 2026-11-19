@@ -1,26 +1,43 @@
 name: CR offers -> Telegram
+# One long job polls Content Rewards every poll_seconds (config.json) for loop_minutes and posts new offers right away,
+# then starts the next run itself. watchdog.yml restarts it if the chain ever breaks.
 on:
-  schedule: [{cron: "*/30 * * * *"}]
   workflow_dispatch:
     inputs:
       backfill: {description: "Test: repost N newest offers (0 = normal run)", default: "0"}
       all_platforms: {description: "Test: only offers with X+TikTok+IG+YT (yes/no)", default: "no"}
-permissions: {contents: write}
-concurrency: {group: poster}
+permissions: {contents: write, actions: write}
+# every workflow that uses the Telegram session shares this group: one session must never run on two machines at once
+concurrency: {group: poster, cancel-in-progress: false}
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
+        with: {python-version: "3.12", cache: pip}
       - run: pip install -r requirements.txt
-      - run: if [ "${{ inputs.backfill || 0 }}" != "0" ]; then python main.py --backfill ${{ inputs.backfill }} $( [ "${{ inputs.all_platforms }}" = "yes" ] && echo --all-platforms ); else python main.py; fi
+      - name: Poll and post
+        run: |
+          if [ "${{ inputs.backfill || '0' }}" != "0" ]; then
+            python main.py --backfill "${{ inputs.backfill }}" $( [ "${{ inputs.all_platforms }}" = "yes" ] && echo --all-platforms )
+          else
+            python main.py --loop
+          fi
         env:
           TG_API_ID: ${{ secrets.TG_API_ID }}
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
           TG_SESSION: ${{ secrets.TG_SESSION }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      - run: |
-          git config user.name bot; git config user.email bot@users.noreply.github.com
-          git add seen.json; git diff --cached --quiet || (git commit -m "seen" && git push)
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONUNBUFFERED: "1"
+      - name: Save state (also after a failure, so posted offers are never reposted)
+        if: always()
+        run: python -c "import main as M; s = M.load_seen(); s is not None and M.git_sync(s)"
+      - name: Start the next run
+        if: success()
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          busy=$(gh api "repos/${{ github.repository }}/actions/runs?per_page=50" --jq '[.workflow_runs[] | select(.status != "completed" and .id != ${{ github.run_id }} and (.path | test("/(post|edit|emoji)\\.yml")))] | length')
+          if [ "$busy" = "0" ]; then gh workflow run post.yml --ref "${{ github.ref_name }}"; else echo "another Telegram run is queued ($busy), it takes over"; fi
