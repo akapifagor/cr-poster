@@ -52,3 +52,8 @@ Actions -> "Re-render old posts" -> Run workflow: пересобирает по�
 ## Тесты
 `python -m unittest discover -s tests -v` - офлайн-тесты на реальных данных CR (tests/fixtures.json) и на цикле публикации с фейковым Telegram.
 `python main.py --dry` - показать посты, которые ушли бы сейчас, ничего не отправляя.
+
+## Версии зависимостей и экшенов
+Библиотеки зафиксированы с хешами в `requirements.txt` (список верхнего уровня - `requirements.in`), экшены привязаны к хешам коммитов. Так взломанный новый релиз библиотеки или экшена не попадёт в запуск, где есть сессия Telegram, а логи публичного репозитория видят все.
+- Обновить библиотеки: `uv pip compile requirements.in --generate-hashes --universal --python-version 3.12 -U -o requirements.txt`, прогнать тесты, закоммитить.
+- Обновить экшен: взять хеш коммита нового тега (`gh api repos/actions/checkout/commits/v8 --jq .sha`) и заменить его во всех `.github/workflows/*.yml`, оставив номер версии в комментарии.
