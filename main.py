@@ -293,11 +293,13 @@ def visible_len(s):
     from telethon.extensions import html as tg_html
     return len(tg_html.parse(s)[0].encode("utf-16-le")) // 2
 
-def caption(o, det):
+def caption(o, det, use_ai=True, updated=None):
+    """post text (Telegram HTML). use_ai=False: rules only (a refresh compares terms without spending AI quota);
+    updated: date for the "terms changed" line of a re-rendered post"""
     det = det or {}
     conf = det.get("configuration") or {}
     name = html.escape(re.sub(r"(?i)\b([a-z0-9-]+)\.(com|io|app|net|org|gg|ai|co|xyz|tv|fun)\b", "\\1.\u2060\\2", o["name"].strip()))  # stop Telegram auto-linking "Oceans.com" in titles
-    ai = ai_classify(o, det)
+    ai = ai_classify(o, det) if use_ai else None
     cats = list(dict.fromkeys(NICHE.get(c["id"], c["name"]) for c in o.get("categories") or []))
     if ai and ai.get("niches"): cats = ai["niches"]
     if not any("18+" in c for c in cats) and adult(brief(o, det)):
@@ -402,6 +404,7 @@ def caption(o, det):
         bits.append(f"клипперам начислено ${st['paid'] / 100:,.0f}" if st.get("paid", 0) >= 100 else "пока без начислений")
         L.append(f"🏢 <b>Рекламодатель:</b> {html.escape(org)} ({', '.join(bits)})")
         i_org = len(L) - 1
+    if updated: L.append(f"🔄 Условия обновлены {updated:%d.%m}")
     sig = CFG.get("signature") or {}
     tail = f'\n\n[ {html.escape(sig.get("prefix", "By"))} <a href="{sig["url"]}">{html.escape(sig["text"])}</a> ]' if sig.get("url") else ""
     lim = 1024  # Telegram media caption limit (visible text); real captions are ~400-650, this is a safety net
@@ -579,10 +582,79 @@ async def post_new(cl, ch, new, seen, st):
         st.unsure.add(oid)
         await send(cl, ch, o, cap, sched)  # Telegram/network errors propagate: the offer stays unseen and is retried
         st.unsure.discard(oid)
-        st.next_slot = when + gap
+        st.next_slot = max(when, datetime.now(timezone.utc)) + gap  # a FloodWait inside send() must not shrink the gap
         seen.add(oid); save_seen(seen)
         print(f"scheduled {sched:%H:%M}Z" if sched else "posted", o["name"])
         await asyncio.sleep(2)
+
+# ---------- keeping published posts true to CR ----------
+CLOSED_RE = re.compile(r"^⛔ Оффер", re.M)
+TERMS_START = ("Ставки", "ставки в оффере", "📌", "🏆", "👀", "⏳", "💲", "💼", "💰", "🔢", "📝", "🌍", "Площадки")
+PLAT_LINE = re.compile(r"^\S+ (?:%s) - " % "|".join(map(re.escape, PLAT.values())))
+
+def terms(text):
+    """lines of a post's visible text that state the offer's terms (rates, caps, limits, budget size, application).
+    Spent share and advertiser stats change all the time and are left out: they alone never trigger an edit."""
+    out = []
+    for line in (x.strip() for x in text.splitlines()):
+        if line.startswith("💵"): out.append(re.sub(r", потрачено.*$", "", line))
+        elif line.startswith(TERMS_START) or PLAT_LINE.match(line): out.append(line)
+    return out
+
+def post_campaign(msg):
+    """CR campaign id a channel message links to, or None"""
+    for s in [getattr(e, "url", "") or "" for e in getattr(msg, "entities", None) or []] + [getattr(msg, "message", "") or ""]:
+        m = CAMP_RE.search(s)
+        if m: return m.group(1)
+    return None
+
+def mark_closed(h, det):
+    """the post's HTML with a "closed" line under the title"""
+    first, _, rest = h.partition("\n")
+    why = "на паузе" if (det or {}).get("status") == "paused" else "закрыт"
+    return f"{first}\n⛔ <b>Оффер {why}</b>\n{rest}"
+
+async def refresh_posts(cl, ch, live):
+    """Keep recent posts true to the offer: advertisers change rates, caps and limits after launch (1 post in 4 within
+    2 days) and pause offers. A post whose terms changed is re-rendered; one whose offer CR paused or closed gets a line
+    saying so. Posts from the last refresh_hours only, at most refresh_max_edits edits per pass. Channel edits are silent.
+    live: {campaign id: listing entry} of the active offers."""
+    from telethon.errors import MessageNotModifiedError, FloodWaitError
+    from telethon.extensions import html as tg_html
+    since = datetime.now(timezone.utc) - timedelta(hours=float(CFG.get("refresh_hours", 72)))
+    left = int(CFG.get("refresh_max_edits", 8))
+    st = {"checked": 0, "updated": 0, "closed": 0}
+    async for msg in cl.iter_messages(ch, limit=500):
+        if msg.date < since or left <= 0: break
+        cid = post_campaign(msg)
+        text = msg.message or ""
+        if not cid or "Открыть оффер" not in text or "💵 Бюджет:" not in text: continue  # only the bot's own offer posts
+        o, det = live.get(cid), detail(cid)
+        st["checked"] += 1
+        await asyncio.sleep(0.3)  # gentle on the CR API: one detail request per recent post
+        if o is None:  # not listed as active: paused, ended or private (a few active offers are unlisted: leave those)
+            if CLOSED_RE.search(text) or (det is not None and det.get("status") == "active"): continue
+            new, kind = mark_closed(tg_html.unparse(text, msg.entities or []), det), "closed"
+        elif det is None:
+            continue
+        else:
+            changed = terms(tg_html.parse(caption(o, det, use_ai=False))[0]) != terms(text)
+            if not changed and not CLOSED_RE.search(text): continue
+            new, kind = caption(o, det, updated=datetime.now(timezone.utc) if changed else None), "updated"
+        if visible_len(new) > 1024: print("refresh: too long, skip", msg.id); continue
+        try:
+            await cl.edit_message(ch, msg.id, new, parse_mode="html", link_preview=False)
+            st[kind] += 1; left -= 1
+            print(f"refresh: {kind} #{msg.id}", (o or {}).get("name", cid)[:60])
+        except MessageNotModifiedError:
+            pass
+        except FloodWaitError as e:
+            print("refresh: flood wait", e.seconds, "s, rest next pass"); break
+        except Exception as e:  # one odd post must not stop the pass
+            print("refresh: edit fail", msg.id, repr(e)[:200])
+        await asyncio.sleep(float(CFG.get("refresh_edit_gap_seconds", 10)))
+    print("refresh:", st)
+    return st
 
 async def run(loop):
     seen = load_seen()
@@ -597,7 +669,8 @@ async def run(loop):
         if ids - seen: print("already in channel, marking seen:", len(ids - seen)); seen |= ids
         st = Run()
         if last: st.next_slot = last + timedelta(minutes=float(CFG.get("post_gap_minutes", 3)))
-        full_at = yield_at = -1e9; errors = 0; synced = -1
+        full_at = yield_at = refresh_at = -1e9; errors = 0; synced = -1
+        refresh_every = float(CFG.get("refresh_every_minutes", 120)) * 60
         while True:
             t0 = time.monotonic()
             try:
@@ -608,6 +681,10 @@ async def run(loop):
                 if new:
                     if not cl.is_connected(): await cl.connect()
                     await post_new(cl, ch, new, seen, st)
+                elif full and refresh_every > 0 and t0 - refresh_at >= refresh_every:  # needs the full list; new offers go first
+                    refresh_at = t0
+                    try: await refresh_posts(cl, ch, {o["id"]: o for o in camps if eligible(o)})
+                    except Exception as e: print("refresh fail", repr(e)[:300])  # posting new offers matters more
                 errors = 0
             except Exception as e:
                 errors += 1

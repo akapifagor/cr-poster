@@ -26,5 +26,9 @@
   "max_spent_pct": 80,
   "poll_seconds": 60,
   "loop_minutes": 330,
-  "post_gap_minutes": 3
+  "post_gap_minutes": 3,
+  "refresh_every_minutes": 120,
+  "refresh_hours": 72,
+  "refresh_max_edits": 8,
+  "refresh_edit_gap_seconds": 10
 }

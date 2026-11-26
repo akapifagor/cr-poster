@@ -1,6 +1,7 @@
 name: CR offers -> Telegram
 # One long job polls Content Rewards every poll_seconds (config.json) for loop_minutes and posts new offers right away,
-# then starts the next run itself. watchdog.yml restarts it if the chain ever breaks.
+# then starts the next run itself, also after a failure or a cancel (to stop the poster, disable this workflow).
+# watchdog.yml restarts it if the chain still breaks.
 on:
   workflow_dispatch:
     inputs:
@@ -14,8 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - run: echo "STARTED=$(date +%s)" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: {python-version: "3.12", cache: pip}
       - run: pip install -r requirements.txt
       - name: Poll and post
@@ -36,8 +38,14 @@ jobs:
         if: always()
         run: python -c "import main as M; s = M.load_seen(); s is not None and M.git_sync(s)"
       - name: Start the next run
-        if: success()
-        env: {GH_TOKEN: "${{ github.token }}"}
+        # always(): on Nov 22 a cancelled run skipped this step and the chain stayed down 2h20m (GitHub ran the
+        # watchdog cron 6 times in 48 h). A run that failed within 10 min is not restarted at once: no crash loop.
+        if: always()
+        env: {GH_TOKEN: "${{ github.token }}", STATUS: "${{ job.status }}"}
         run: |
+          up=$(( $(date +%s) - ${STARTED:-0} ))
+          if [ "$STATUS" != "success" ] && [ "$up" -lt 600 ]; then
+            echo "::warning::poster stopped after $((up / 60)) min ($STATUS), no instant restart: the watchdog retries"; exit 0
+          fi
           busy=$(gh api "repos/${{ github.repository }}/actions/runs?per_page=50" --jq '[.workflow_runs[] | select(.status != "completed" and .id != ${{ github.run_id }} and (.path | test("/(post|edit|emoji)\\.yml")))] | length')
           if [ "$busy" = "0" ]; then gh workflow run post.yml --ref "${{ github.ref_name }}"; else echo "another Telegram run is queued ($busy), it takes over"; fi

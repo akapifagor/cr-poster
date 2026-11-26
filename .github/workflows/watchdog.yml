@@ -1,7 +1,11 @@
 name: Watchdog (restarts the poster)
 # The poster restarts itself; this only covers a broken chain (crash, cancelled run, GitHub outage).
+# GitHub runs this cron only a few times a day, so it also fires the moment a poster run ends.
 on:
-  schedule: [{cron: "4,19,34,49 * * * *"}]  # off the :00/:30 peak; GitHub may still delay it
+  schedule: [{cron: "4,19,34,49 * * * *"}]  # off the :00/:30 peak; GitHub may still delay or skip it
+  workflow_run:
+    workflows: ["CR offers -> Telegram"]
+    types: [completed]
   workflow_dispatch:
 permissions: {actions: write}
 jobs:
@@ -9,7 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - env: {GH_TOKEN: "${{ github.token }}", REPO: "${{ github.repository }}"}
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_STARTED: ${{ github.event.workflow_run.run_started_at }}
+          RUN_ENDED: ${{ github.event.workflow_run.updated_at }}
         run: |
+          if [ "$EVENT" = "workflow_run" ] && [ "$CONCLUSION" != "success" ]; then
+            up=$(( $(date -d "$RUN_ENDED" +%s) - $(date -d "$RUN_STARTED" +%s) ))
+            if [ "$up" -lt 600 ]; then echo "::warning::poster failed after $((up / 60)) min ($CONCLUSION), not restarting right away"; exit 0; fi
+          fi
           busy=$(gh api "repos/$REPO/actions/runs?per_page=50" --jq '[.workflow_runs[] | select(.status != "completed" and (.path | test("/(post|edit|emoji)\\.yml")))] | length')
           if [ "$busy" = "0" ]; then gh workflow run post.yml -R "$REPO"; echo "poster was not running -> started"; else echo "poster is running ($busy)"; fi
