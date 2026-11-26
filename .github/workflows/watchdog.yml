@@ -1,6 +1,7 @@
 name: Watchdog (restarts the poster)
-# The poster restarts itself; this only covers a broken chain (crash, cancelled run, GitHub outage).
-# GitHub runs this cron only a few times a day, so it also fires the moment a poster run ends.
+# The poster restarts itself (also after a failure or a cancel); this only covers a chain that still broke.
+# GitHub runs this cron only a few times a day. workflow_run fires when a poster run you started yourself ends;
+# runs the chain starts with GITHUB_TOKEN don't trigger it (GitHub's rule against workflow loops).
 on:
   schedule: [{cron: "4,19,34,49 * * * *"}]  # off the :00/:30 peak; GitHub may still delay or skip it
   workflow_run:
